@@ -1,6 +1,6 @@
 ![](tt_logo.png)
 
-This is the repository for all of my contributions to #TidyTuesday, an initiative by the [R4DS online learning communits](https://www.rfordatasci.com/). All the data and related articles can be found in the official [#TidyTuesday github repo](https://github.com/rfordatascience/tidytuesday).
+This is the repository for all of my contributions to #TidyTuesday, an initiative by the [R4DS online learning community](https://www.rfordatasci.com/). All the data and related articles can be found in the official [#TidyTuesday github repo](https://github.com/rfordatascience/tidytuesday).
 
 Each of the folders in this repository contains some example visualizations and the code I wrote to create them. So far, I have worked on the following data sets:
   <ol>
