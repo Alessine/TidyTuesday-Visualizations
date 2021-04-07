@@ -1,6 +1,4 @@
-# TidyTuesday
-
-![]()
+![](tt_logo.png)
 
 This is the repo for all of my #TidyTuesday contributions. Each folder contains some example visualizations and the code I wrote to create them. So far, I have worked on the following data sets:
   <ol>
