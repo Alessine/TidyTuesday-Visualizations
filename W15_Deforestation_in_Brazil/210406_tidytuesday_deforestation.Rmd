@@ -5,19 +5,27 @@ date: "April 6, 2021"
 output: html_document
 ---
 
+These are the libraries required:
+
 ```{r}
 library(tidytuesdayR)
 library(treemap)
-#library(tidyverse)
+library(tidyverse)
 library(gifski)
-library(dplyr)
+library(glue)
 library(RColorBrewer)
 
 ```
 
+
+The data can be loaded in via the TidyTuesday library.
+
 ```{r}
 tuesdata <- tidytuesdayR::tt_load(2021, week = 15)
 ```
+
+
+As a first step rename the columns to make them more intuitive to work with.
 
 ```{r}
 df_brazil_loss <- data.frame(tuesdata[3])
@@ -33,91 +41,76 @@ df_brazil_loss <- df_brazil_loss %>%
          "Other infrastructure" = brazil_loss.other_infrastructure,
          "Roads" = brazil_loss.roads,
          "Tree plantations" = brazil_loss.tree_plantations_including_palm,
-         "Small scale clearing" = brazil_loss.small_scale_clearing)
+         "Small scale clearing" = brazil_loss.small_scale_clearing) %>%
 head(df_brazil_loss)
 ```
 
 
+Then change the format of the data frame and add in additional columns as required for the plots.
+
 ```{r}
 df_brazil_loss_long <- df_brazil_loss %>% 
   select(c(3:14)) %>%
-  pivot_longer(!Year, names_to = "Drivers of loss", values_to = "Area in hectars")
+  pivot_longer(!Year, names_to = "Drivers of loss", values_to = "Area in hectars") %>%
+  group_by(Year) %>%
+  mutate("Annual Total" = sum(`Area in hectars`)) %>%
+  ungroup() %>%
+  mutate("Percentage" = round(`Area in hectars`/`Annual Total`*100, 2),
+         "Drivers of loss" = paste(`Drivers of loss`, glue("{`Percentage`}%")))
 
 df_brazil_loss_long
 ```
     
 
-```{r}
-treemap2_2001 <- df_brazil_loss_long %>%
-  filter(Year == 2001) %>% 
-  treemap(index = "Drivers of loss",
-          vSize = "Area of rainforest lost in Brazil in 2001",
-          type = "index",
-          palette = "RdGy")
-
-treemap2_2001
-```
+Here's what one treemap looks like.
 
 ```{r}
-treemap2_2008 <- df_brazil_loss_long %>%
-  filter(Year == 2008) %>% 
-  treemap(index = "Drivers of loss",
-          vSize = "Area of rainforest lost in Brazil in 2008",
-          type = "index",
-          palette = "RdGy")
-
-treemap2_2008
-```
-
-```{r}
-treemap2_2013 <- df_brazil_loss_long %>%
+  df_brazil_loss_long %>%
   filter(Year == 2013) %>% 
   treemap(index = "Drivers of loss",
           vSize = "Area in hectars",
           type = "index",
           palette = "RdGy",
-          title = "Area of rainforest lost in Brazil in 2013")
-
-treemap2_2013
+          title = "Drivers for Area of Rainforest lost in Brazil in 2013",
+          algorithm = "pivotSize",
+          sortID = "Drivers of loss")
 ```
 
 
-
-```{r}
-library(glue)
-```
+This loop creates one treemap for each year and saves it in a folder called 'pngs'.
 
 ```{r}
 png_files <- character()
 for (i in unique(df_brazil_loss_long$Year)) {
-  png(glue("pngs/treemap{i}.png"))
+  png(glue("pngs/treemap{i}.png"), width = 750, height = 500, res = 140)
   df_brazil_loss_long %>%
   filter(Year == i) %>% 
   treemap(index = "Drivers of loss",
           vSize = "Area in hectars",
           type = "index",
           palette = "RdGy",
-          title = "Area of rainforest lost in Brazil")
+          title = glue("Drivers for Area of Rainforest lost in Brazil in {i}"),
+          algorithm = "pivotSize",
+          sortID = "Drivers of loss")
   dev.off()
   png_path <- glue("pngs/treemap{i}.png")
   png_files[i-2000] <- png_path
 }
 ```
 
-```{r}
-png_files
-```
 
+With this code, the pngs are transformed into one gif file, which is saved in the same folder where the Markdown document is.
 
 ```{r}
 gifski(
 png_files,
-gif_file = "animation.gif",
+gif_file = "drivers_rainforest_loss.gif",
 width = 800,
 height = 600,
-delay = 1,
+delay = 1.5,
 loop = TRUE,
-progress = TRUE
+progress = FALSE
 )
+
 ```
 
