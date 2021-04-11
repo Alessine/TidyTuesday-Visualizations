@@ -8,7 +8,9 @@ output: html_document
 ```{r}
 library(tidytuesdayR)
 library(treemap)
-library(tidyverse)
+#library(tidyverse)
+library(gifski)
+library(dplyr)
 library(RColorBrewer)
 
 ```
@@ -79,9 +81,43 @@ treemap2_2013 <- df_brazil_loss_long %>%
 treemap2_2013
 ```
 
-```{r}
 
+
+```{r}
+library(glue)
+```
+
+```{r}
+png_files <- character()
+for (i in unique(df_brazil_loss_long$Year)) {
+  png(glue("pngs/treemap{i}.png"))
+  df_brazil_loss_long %>%
+  filter(Year == i) %>% 
+  treemap(index = "Drivers of loss",
+          vSize = "Area in hectars",
+          type = "index",
+          palette = "RdGy",
+          title = "Area of rainforest lost in Brazil")
+  dev.off()
+  png_path <- glue("pngs/treemap{i}.png")
+  png_files[i-2000] <- png_path
+}
+```
+
+```{r}
+png_files
 ```
 
 
+```{r}
+gifski(
+png_files,
+gif_file = "animation.gif",
+width = 800,
+height = 600,
+delay = 1,
+loop = TRUE,
+progress = TRUE
+)
+```
 
