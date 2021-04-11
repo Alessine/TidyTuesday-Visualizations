@@ -7,4 +7,4 @@ Each of the folders in this repository contains some example visualizations and 
     <li> Deforestation in Brazil (Week 15 / 2021), created treemaps to show the break up of forest area loss into different reasons, the data was provided by <a href= "https://ourworldindata.org/">Our World in Data</a></li>
   </ol>
   
-  ![](W15_Deforestation_in_Brazil/treemap_2013.jpg)
+  ![](W15_Deforestation_in_Brazil/drivers_rainforest_loss.gif)
