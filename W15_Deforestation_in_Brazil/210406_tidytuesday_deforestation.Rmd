@@ -6,49 +6,15 @@ output: html_document
 ---
 
 ```{r}
-# First get the data from CRAN
-install.packages("tidytuesdayR")
 library(tidytuesdayR)
-
-```
-
-
-```{r}
-tuesdata <- tidytuesdayR::tt_load(2021, week = 15)
-```
-
-
-```{r}
-df_forest <- data.frame(tuesdata[1])
-df_forest_area <- data.frame(tuesdata[2])
-
-df_soybean_use <- data.frame(tuesdata[4])
-df_vegetable_oil <- data.frame(tuesdata[5])
-
-```
-
-```{r}
-df_forest
-```
-
-
-```{r}
-df_forest_area
-```
-
-```{r}
-colnames(df_brazil_loss)
-```
-
-```{r}
-head(df_brazil_loss)
-```
-
-
-```{r}
 library(treemapify)
 library(tidyverse)
 library(RColorBrewer)
+
+```
+
+```{r}
+tuesdata <- tidytuesdayR::tt_load(2021, week = 15)
 ```
 
 ```{r}
@@ -66,45 +32,28 @@ df_brazil_loss <- df_brazil_loss %>%
          "Roads" = brazil_loss.roads,
          "Tree plantations" = brazil_loss.tree_plantations_including_palm,
          "Small scale clearing" = brazil_loss.small_scale_clearing)
-df_brazil_loss
+head(df_brazil_loss)
 ```
 
 
 ```{r}
 df_brazil_loss_long <- df_brazil_loss %>% 
   select(c(3:14)) %>%
-  pivot_longer(!Year, names_to = "Reason for loss", values_to = "Area in hectars")
+  pivot_longer(!Year, names_to = "Drivers of loss", values_to = "Area in hectars")
 
 df_brazil_loss_long
 ```
     
-    
-    brazil_loss.year, "Commercial crops", "Flooding due to dams", 
-         brazil_loss.natural_disturbances, brazil_loss.pasture, 
-         brazil_loss.selective_logging, brazil_loss.fire, brazil_loss.mining, 
-         brazil_loss.other_infrastructure, brazil_loss.roads, brazil_loss.tree_plantations_including_palm, 
-         brazil_loss.roads, brazil_loss.tree_plantations_including_palm, 
-         brazil_loss.small_scale_clearing)
 ```{r}
-colnames(df_brazil_loss_long)
-```
-
-```{r, fig.height = 12}
-display.brewer.all()
-```
-
-
-```{r}
-
 treemap_2001 <- df_brazil_loss_long %>%
   filter(Year == 2001) %>%
   ggplot(aes(area = `Area in hectars`, 
-             fill = `Reason for loss`, 
-             label = `Reason for loss`, 
+             fill = `Drivers of loss`, 
+             label = `Drivers of loss`, 
              linetype = "solid")) +
   geom_treemap(start = "topleft", show.legend = FALSE) +
   geom_treemap_text(start = "topleft", place = "center", reflow = T) +
-  scale_fill_brewer(palette = "Spectral")
+  scale_fill_brewer(palette = "RdGy")
 
 treemap_2001
 ```
@@ -121,8 +70,8 @@ colnames(df_brazil_loss_long)
 ```{r}
 treemap2_2001 <- df_brazil_loss_long %>%
   filter(Year == 2001) %>% 
-  treemap(index = "Reason for loss",
-          vSize = "Area in hectars",
+  treemap(index = "Drivers of loss",
+          vSize = "Area of rainforest lost in Brazil in 2001",
           type = "index",
           palette = "RdGy")
 
@@ -132,8 +81,8 @@ treemap2_2001
 ```{r}
 treemap2_2008 <- df_brazil_loss_long %>%
   filter(Year == 2008) %>% 
-  treemap(index = "Reason for loss",
-          vSize = "Area in hectars",
+  treemap(index = "Drivers of loss",
+          vSize = "Area of rainforest lost in Brazil in 2008",
           type = "index",
           palette = "RdGy")
 
@@ -141,15 +90,20 @@ treemap2_2008
 ```
 
 ```{r}
-jpeg("treemap_2013.jpg", width = 500, height = 350)
 treemap2_2013 <- df_brazil_loss_long %>%
   filter(Year == 2013) %>% 
-  treemap(index = "Reason for loss",
+  treemap(index = "Drivers of loss",
           vSize = "Area in hectars",
           type = "index",
           palette = "RdGy",
           title = "Area of rainforest lost in Brazil in 2013")
 
 treemap2_2013
-dev.off()
 ```
+
+```{r}
+
+```
+
+
+
