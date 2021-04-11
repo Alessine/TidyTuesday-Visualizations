@@ -7,7 +7,7 @@ output: html_document
 
 ```{r}
 library(tidytuesdayR)
-library(treemapify)
+library(treemap)
 library(tidyverse)
 library(RColorBrewer)
 
@@ -44,28 +44,6 @@ df_brazil_loss_long <- df_brazil_loss %>%
 df_brazil_loss_long
 ```
     
-```{r}
-treemap_2001 <- df_brazil_loss_long %>%
-  filter(Year == 2001) %>%
-  ggplot(aes(area = `Area in hectars`, 
-             fill = `Drivers of loss`, 
-             label = `Drivers of loss`, 
-             linetype = "solid")) +
-  geom_treemap(start = "topleft", show.legend = FALSE) +
-  geom_treemap_text(start = "topleft", place = "center", reflow = T) +
-  scale_fill_brewer(palette = "RdGy")
-
-treemap_2001
-```
-
-```{r}
-library(treemap)
-```
-
-```{r}
-colnames(df_brazil_loss_long)
-```
-
 
 ```{r}
 treemap2_2001 <- df_brazil_loss_long %>%
