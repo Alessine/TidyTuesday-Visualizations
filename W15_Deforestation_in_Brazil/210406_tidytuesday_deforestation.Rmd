@@ -41,7 +41,7 @@ df_brazil_loss <- df_brazil_loss %>%
          "Other infrastructure" = brazil_loss.other_infrastructure,
          "Roads" = brazil_loss.roads,
          "Tree plantations" = brazil_loss.tree_plantations_including_palm,
-         "Small scale clearing" = brazil_loss.small_scale_clearing) %>%
+         "Small scale clearing" = brazil_loss.small_scale_clearing)
 head(df_brazil_loss)
 ```
 
