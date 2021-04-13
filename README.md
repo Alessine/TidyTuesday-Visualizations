@@ -8,4 +8,4 @@ Each of the folders in this repository contains some example visualizations and 
 ### Week 15 - Deforestation in Brazil
 I created treemaps to show the break up of forest area loss by its different drivers in the years 2001-2013. I then used the gifski library to animate the png files and compile them into one gif. The data was provided by [Our World in Data](https://ourworldindata.org/").
 
-![](W15_Deforestation_in_Brazil/drivers_rainforest_loss.gif)
+![](2021W15_Deforestation_in_Brazil/drivers_rainforest_loss.gif)
