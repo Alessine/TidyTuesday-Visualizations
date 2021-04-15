@@ -6,7 +6,7 @@ Each of the folders in this repository contains some example visualizations and 
 
 ## April 2021
 ### Week 16 - US Post Offices
-I tried my hand at animated maps with the maps library and gganimate to show the establishment of post offices in the mainland USA over time. The data was provided by [Cameron Blevins and Richard W. Helbock](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/NUKCNA).
+I tried my hand at animated maps with the maps library and gganimate to show the establishment of post offices in the mainland USA between the years 1639 and 2000. The data was provided by [Cameron Blevins and Richard W. Helbock](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/NUKCNA).
 
 ![](2021W16_US_post_offices/US_postoffices_est.gif)
 
