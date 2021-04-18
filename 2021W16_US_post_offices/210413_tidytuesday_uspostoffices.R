@@ -24,15 +24,15 @@ gg1 <- ggplot() +
   coord_fixed(1.3)
 
 # Adding the points to it
-#plot_est <- gg1 +
-#  geom_point(data = df_us_postoffices_2, aes(x = `post_offices.longitude`, y = `post_offices.latitude`), 
-#             color = "#004B87", size = 0.001) +
-#  theme(plot.title = element_text(size = 17, family = "Serif", hjust = .25, 
-#                                margin = margin(b = -8, unit = "pt"), color = "#004B87")) +
-#  transition_manual(`post_offices.established`, cumulative = TRUE) +
-#  labs(title = "Post Offices established in mainland USA in: {current_frame}")
+plot_est <- gg1 +
+  geom_point(data = df_us_postoffices_2, aes(x = `post_offices.longitude`, y = `post_offices.latitude`), 
+             color = "#004B87", size = 0.001) +
+  theme(plot.title = element_text(size = 17, family = "Serif", hjust = .25, 
+                                margin = margin(b = -8, unit = "pt"), color = "#004B87")) +
+  transition_manual(`post_offices.established`, cumulative = TRUE) +
+  labs(title = "Post Offices established in mainland USA in: {current_frame}")
 
 # Animating the map and saving it to the drive
-#anim <- animate(plot_est)
-#anim_save("US_postoffices_est.gif", anim)
+anim <- animate(plot_est, height = 800, width = 800)
+anim_save("US_postoffices_est.gif", anim)
 
