@@ -33,6 +33,6 @@ plot_est <- gg1 +
   labs(title = "Post Offices established in mainland USA in: {current_frame}")
 
 # Animating the map and saving it to the drive
-anim <- animate(plot_est, height = 800, width = 800)
+anim <- animate(plot_est, height = 500, width = 800)
 anim_save("US_postoffices_est.gif", anim)
 
