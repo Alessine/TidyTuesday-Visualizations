@@ -6,7 +6,7 @@ library(gganimate)
 setwd("~/Desktop/R/TidyTuesday/github_repo/2021W16_US_post_offices")
 
 # Read in the data from the tidy tuesday library.
-#tuesdata <- tidytuesdayR::tt_load(2021, week = 16)
+tuesdata <- tidytuesdayR::tt_load(2021, week = 16)
 df_us_postoffices <- data.frame(tuesdata[1])
 
 # This is the data for the basic map.
