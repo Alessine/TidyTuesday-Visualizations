@@ -1,0 +1,32 @@
+---
+title: "210420_tidytuesday_netflixshows"
+author: "Angela"
+date: "4/20/2021"
+output: html_document
+---
+
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+
+```
+
+
+```{r}
+# Read in the data from the tidy tuesday library.
+#tuesdata <- tidytuesdayR::tt_load(2021, week = 17)
+df_netflix_shows <- data.frame(tuesdata[1])
+```
+
+```{r}
+head(df_netflix_shows)
+
+```
+
+```{r}
+```
+
+
+```{r}
+```
+
