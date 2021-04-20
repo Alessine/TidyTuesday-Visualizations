@@ -7,7 +7,8 @@ Each of the folders in this repository contains some example visualizations and 
 ## April 2021
 
 ### Week 17 - Netflix movies and TV shows
-I tried my hand at animated maps with the maps library and gganimate to show the establishment of post offices in the mainland USA between the years 1639 and 2000. The data was provided by [Cameron Blevins and Richard W. Helbock](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/NUKCNA).
+Violin plots are useful to visualize the distributions of categorical variables. So I selected the ten countries with the highest number of TV Shows and Movies on Netflix and created a split violin plot for each of them. The distributions show how the origin of movies and shows changed over time, from mostly American productions to a more diversified portfolio.
+The data comes from [Kaggle](https://www.kaggle.com/shivamb/netflix-shows?select=netflix_titles.csv) with credit to Shivam Bansal.
 
 ![](2021W17_Netflix_Shows/split_violin.png)
 
