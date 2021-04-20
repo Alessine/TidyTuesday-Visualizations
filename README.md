@@ -7,7 +7,7 @@ Each of the folders in this repository contains some example visualizations and 
 ## April 2021
 
 ### Week 17 - Netflix movies and TV shows
-Violin plots are useful to visualize the distributions of categorical variables. So I selected the ten countries with the highest number of TV Shows and Movies on Netflix and created a split violin plot for each of them. The distributions show how the origin of movies and shows changes over the years, from mostly American productions in the 70s and 80s to a more diversified portfolio.
+Violin plots are useful to visualize the distributions of categorical variables. So I selected the ten countries with the highest number of TV Shows and Movies on Netflix and created a split violin plot for each of them. The distributions show how the origin of movies and shows changes over the years, from mostly American productions to a more diversified portfolio.
 
 The data comes from [Kaggle](https://www.kaggle.com/shivamb/netflix-shows?select=netflix_titles.csv) with credit to Shivam Bansal.
 
