@@ -41,53 +41,56 @@ df_netflix_movies %>%
 ```
 
 ```{r}
+countries_list <- df_netflix_shows %>% 
+  separate(netflix_titles.country, "first_country", ",") %>%
+  group_by(first_country) %>%
+  count(first_country) %>%
+  arrange(desc(n)) %>%
+  filter(!is.na(first_country)) %>%
+  .$first_country
+
+countries_list[1:10]
+```
+```{r}
 df_netflix_shows %>% 
   separate(netflix_titles.country, "first_country", ",") %>%  
-  group_by(first_country, netflix_titles.release_year, netflix_titles.type) %>%
-  count(first_country) %>%
-  filter(n > 10 &
-           !is.na(first_country)) %>%
- 
-  ggplot(aes(fct_rev(first_country), netflix_titles.release_year, color = netflix_titles.type)) +
-  geom_point(na.rm = TRUE, alpha = 0.7) +
-  geom_jitter() +
+  filter(first_country %in% countries_list[1:10] &
+           netflix_titles.type == "Movie") %>%
+
+  ggplot(aes(fct_rev(first_country), netflix_titles.release_year, fill = first_country)) +
+  geom_violin(alpha = 0.7, show.legend = FALSE) +
   coord_flip() +
   theme_classic()
 
 
 ```
 
+```{r, fig.width = 12}
+library("vioplot")
+library(stringr)
+vioplot_movies <- df_netflix_shows %>% 
+  separate(netflix_titles.country, "first_country", ",") %>%  
+  filter(first_country %in% countries_list[1:10] &
+           netflix_titles.type == "Movie")
+
+vioplot_movies$first_country <- str_replace_all(vioplot_movies$first_country, " ", "\n")
+
+vioplot_shows <- df_netflix_shows %>% 
+  separate(netflix_titles.country, "first_country", ",") %>%  
+  filter(first_country %in% countries_list[1:10] &
+           netflix_titles.type == "TV Show")
+
+vioplot(netflix_titles.release_year~first_country, data=vioplot_movies, col = "palevioletred", plotCentre = "line", side = "right")
+vioplot(netflix_titles.release_year~first_country, data=vioplot_shows, col = "lightblue", plotCentre = "line", side = "left", add = T)
+legend("bottomleft", fill = c("lightblue", "palevioletred"), legend = c("TV Shows", "Movies"))
+```
+
+
 
 ```{r}
-
+# Look for specific actors
 
 sum(str_detect(df_netflix_shows$netflix_titles.cast, "Shah Rukh Khan"), na.rm = TRUE)
 ```
 
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
 
