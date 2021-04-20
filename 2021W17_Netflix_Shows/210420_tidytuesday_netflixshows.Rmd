@@ -9,12 +9,13 @@ output: html_document
 library(tidytuesdayR)
 library(tidyverse)
 library(stringr)
+library(vioplot)
 ```
 
 
 ```{r}
 # Read in the data from the tidy tuesday library.
-#tuesdata <- tidytuesdayR::tt_load(2021, week = 17)
+tuesdata <- tidytuesdayR::tt_load(2021, week = 17)
 df_netflix_shows <- data.frame(tuesdata[1])
 ```
 
@@ -60,29 +61,31 @@ df_netflix_shows %>%
   ggplot(aes(fct_rev(first_country), netflix_titles.release_year, fill = first_country)) +
   geom_violin(alpha = 0.7, show.legend = FALSE) +
   coord_flip() +
-  theme_classic()
+  theme_classic() +
+  scale_fill_brewer(palette = "Paired")
 
 
 ```
 
-```{r, fig.width = 12}
-library("vioplot")
-library(stringr)
+```{r, fig.width = 10, fig.height = 5}
 vioplot_movies <- df_netflix_shows %>% 
   separate(netflix_titles.country, "first_country", ",") %>%  
   filter(first_country %in% countries_list[1:10] &
            netflix_titles.type == "Movie")
-
-vioplot_movies$first_country <- str_replace_all(vioplot_movies$first_country, " ", "\n")
 
 vioplot_shows <- df_netflix_shows %>% 
   separate(netflix_titles.country, "first_country", ",") %>%  
   filter(first_country %in% countries_list[1:10] &
            netflix_titles.type == "TV Show")
 
-vioplot(netflix_titles.release_year~first_country, data=vioplot_movies, col = "palevioletred", plotCentre = "line", side = "right")
-vioplot(netflix_titles.release_year~first_country, data=vioplot_shows, col = "lightblue", plotCentre = "line", side = "left", add = T)
-legend("bottomleft", fill = c("lightblue", "palevioletred"), legend = c("TV Shows", "Movies"))
+vioplot_shows$first_country <- str_replace_all(vioplot_shows$first_country, " ", "\n")
+
+png("split_violin.png", width = 1000, height = 500)
+vioplot(netflix_titles.release_year~first_country, data = vioplot_shows, col = "orange", plotCentre = "line", side = "right",
+        xlab = "Countries", ylab = "Year", main = "Movies and TV Shows on Netflix")
+vioplot(netflix_titles.release_year~first_country, data = vioplot_movies , col = "skyblue", plotCentre = "line", side = "left", add = T)
+legend("bottomleft", fill = c("skyblue", "orange"), legend = c("Movies", "TV Shows"))
+dev.off()
 ```
 
 
