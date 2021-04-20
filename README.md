@@ -5,6 +5,12 @@ This is the repository for all of my contributions to #TidyTuesday, an initiativ
 Each of the folders in this repository contains some example visualizations and the code I wrote to create them. So far, I have worked on the following data sets:
 
 ## April 2021
+
+### Week 17 - Netflix movies and TV shows
+I tried my hand at animated maps with the maps library and gganimate to show the establishment of post offices in the mainland USA between the years 1639 and 2000. The data was provided by [Cameron Blevins and Richard W. Helbock](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/NUKCNA).
+
+![](2021W17_Netflix_Shows/split_violin.png)
+
 ### Week 16 - US Post Offices
 I tried my hand at animated maps with the maps library and gganimate to show the establishment of post offices in the mainland USA between the years 1639 and 2000. The data was provided by [Cameron Blevins and Richard W. Helbock](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/NUKCNA).
 
