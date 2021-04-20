@@ -8,7 +8,7 @@ output: html_document
 ```{r}
 library(tidytuesdayR)
 library(tidyverse)
-
+library(stringr)
 ```
 
 
@@ -18,10 +18,71 @@ library(tidyverse)
 df_netflix_shows <- data.frame(tuesdata[1])
 ```
 
+
 ```{r}
-head(df_netflix_shows)
+df_netflix_movies <- df_netflix_shows %>%
+  separate(netflix_titles.country, "first_country", ",") %>%  
+  filter(netflix_titles.type == "Movie" & 
+           between(netflix_titles.release_year, 2000, 2021) &
+           !is.na(first_country))
 
 ```
+
+
+```{r}
+df_netflix_movies %>% 
+  group_by(netflix_titles.release_year, first_country) %>%
+  count(first_country) %>%
+  filter(n > 10) %>%
+  ggplot(aes(netflix_titles.release_year, n, fill = first_country)) +
+  geom_bar(stat = "identity", show.legend = TRUE) +
+  theme_light() +
+  scale_fill_discrete()
+```
+
+```{r}
+df_netflix_shows %>% 
+  separate(netflix_titles.country, "first_country", ",") %>%  
+  group_by(first_country, netflix_titles.release_year, netflix_titles.type) %>%
+  count(first_country) %>%
+  filter(n > 10 &
+           !is.na(first_country)) %>%
+ 
+  ggplot(aes(fct_rev(first_country), netflix_titles.release_year, color = netflix_titles.type)) +
+  geom_point(na.rm = TRUE, alpha = 0.7) +
+  geom_jitter() +
+  coord_flip() +
+  theme_classic()
+
+
+```
+
+
+```{r}
+
+
+sum(str_detect(df_netflix_shows$netflix_titles.cast, "Shah Rukh Khan"), na.rm = TRUE)
+```
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
 
 ```{r}
 ```
