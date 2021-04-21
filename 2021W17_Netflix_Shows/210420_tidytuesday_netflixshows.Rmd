@@ -10,6 +10,7 @@ library(tidytuesdayR)
 library(tidyverse)
 library(stringr)
 library(vioplot)
+library(gghalves)
 ```
 
 
@@ -66,6 +67,25 @@ df_netflix_shows %>%
 
 
 ```
+
+```{r}
+df_netflix_shows %>% 
+  separate(netflix_titles.country, "first_country", ",") %>%  
+  filter(first_country %in% countries_list[1:5]) %>%
+  ggplot(aes(fct_rev(first_country), netflix_titles.release_year, color = netflix_titles.type)) +
+  geom_half_violin(aes(fill = netflix_titles.type), side = "r", position = "nudge", scale = "count", width = 2, 
+                   alpha = 0.9, show.legend = TRUE) +
+  geom_half_point(alpha = 0.9, size = 0.01, position = "nudge", side = "l") +
+  coord_flip() +
+  theme_dark() +
+  theme(legend.position = c(0.8, 1.055), legend.direction = "horizontal", legend.title = element_blank()) +
+  labs(title = "Movies and TV Shows on Netflix",
+       x = "Country of Production", y = "Year of Release") +
+  scale_fill_brewer(palette = "Reds") +
+  scale_color_brewer(palette = "Reds")
+```
+
+
 
 ```{r, fig.width = 10, fig.height = 5}
 vioplot_movies <- df_netflix_shows %>% 
