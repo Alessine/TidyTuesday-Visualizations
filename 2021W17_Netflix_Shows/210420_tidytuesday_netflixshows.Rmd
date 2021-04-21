@@ -69,7 +69,7 @@ df_netflix_shows %>%
 ```
 
 ```{r}
-df_netflix_shows %>% 
+raincloud_plot <- df_netflix_shows %>% 
   separate(netflix_titles.country, "first_country", ",") %>%  
   filter(first_country %in% countries_list[1:5]) %>%
   ggplot(aes(fct_rev(first_country), netflix_titles.release_year, color = netflix_titles.type)) +
@@ -78,11 +78,15 @@ df_netflix_shows %>%
   geom_half_point(alpha = 0.9, size = 0.01, position = "nudge", side = "l") +
   coord_flip() +
   theme_dark() +
-  theme(legend.position = c(0.8, 1.055), legend.direction = "horizontal", legend.title = element_blank()) +
+  theme(legend.position = c(0.8, 1.052), legend.direction = "horizontal", legend.title = element_blank()) +
   labs(title = "Movies and TV Shows on Netflix",
        x = "Country of Production", y = "Year of Release") +
   scale_fill_brewer(palette = "Reds") +
   scale_color_brewer(palette = "Reds")
+raincloud_plot
+
+ggsave("raincloud_plot.png", raincloud_plot)
+
 ```
 
 
