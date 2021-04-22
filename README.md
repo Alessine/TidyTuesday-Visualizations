@@ -15,7 +15,7 @@ Violin plots are useful for visualizing the distributions of categorical variabl
 
 ![](2021W17_Netflix_Shows/split_violin.png)
 
-2. I used the new gghalves library to draw rain cloud plots, which consist of a half-violin plot and a scatter plot below, for the five countries with the highest number of movies and shows on Netflix. These plots give an idea of the absolute number of data points, while also showing their distribution.
+2. I used the gghalves library to draw rain cloud plots, which consist of a half-violin plot and a scatter plot below, for the five countries with the highest number of movies and shows on Netflix. These plots give an idea of the absolute number of data points, while also showing their distribution.
 
 ![](2021W17_Netflix_Shows/raincloud_plot.png)
 
