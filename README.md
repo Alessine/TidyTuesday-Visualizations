@@ -17,7 +17,7 @@ Violin plots are useful for visualizing the distributions of categorical variabl
 
 2. I used the new gghalves library to draw rain cloud plots, which consist of a half-violin plot and a scatter plot below, for the five countries with the highest number of movies and shows on Netflix. These plots give an idea of the absolute number of data point, while also showing their distribution.
 
-![]()
+![](2021W17_Netflix_Shows/raincloud_plot.png)
 
 ### Week 16 - US Post Offices
 I tried my hand at animated maps with the maps library and gganimate to show the establishment of post offices in the mainland USA between the years 1639 and 2000. The data was provided by [Cameron Blevins and Richard W. Helbock](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/NUKCNA).
