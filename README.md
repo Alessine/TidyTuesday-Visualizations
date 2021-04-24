@@ -9,7 +9,7 @@ Each of the folders in this repository contains some example visualizations and 
 ### Week 17 - Netflix movies and TV shows
 This week the data came from [Kaggle](https://www.kaggle.com/shivamb/netflix-shows?select=netflix_titles.csv) with credit to Shivam Bansal.
 
-I was interested in where Netflix movies and TV shows come from, so I created rain cloud plots for the five countries with the highest number of movies and shows, using the gghalves library. These plots give an idea of the absolute number of data points, while also showing their distribution. Additionally, I worked on the theme to align it with Netflix branding.
+I was interested in where the movies and TV shows on Netflix come from, so I created rain cloud plots for the five countries with the highest number of movies and shows, using the gghalves library. These plots give an idea of the absolute number of data points, while also showing their distribution. Additionally, I worked on the theme to align it with Netflix branding.
 
 ![](2021W17_Netflix_Shows/raincloud_plot.png)
 
