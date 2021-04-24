@@ -8,11 +8,9 @@ output: html_document
 ```{r}
 library(tidytuesdayR)
 library(tidyverse)
-library(stringr)
 library(vioplot)
 library(gghalves)
 ```
-
 
 ```{r}
 # Read in the data from the tidy tuesday library.
@@ -20,29 +18,8 @@ tuesdata <- tidytuesdayR::tt_load(2021, week = 17)
 df_netflix_shows <- data.frame(tuesdata[1])
 ```
 
-
 ```{r}
-df_netflix_movies <- df_netflix_shows %>%
-  separate(netflix_titles.country, "first_country", ",") %>%  
-  filter(netflix_titles.type == "Movie" & 
-           between(netflix_titles.release_year, 2000, 2021) &
-           !is.na(first_country))
-
-```
-
-
-```{r}
-df_netflix_movies %>% 
-  group_by(netflix_titles.release_year, first_country) %>%
-  count(first_country) %>%
-  filter(n > 10) %>%
-  ggplot(aes(netflix_titles.release_year, n, fill = first_country)) +
-  geom_bar(stat = "identity", show.legend = TRUE) +
-  theme_light() +
-  scale_fill_discrete()
-```
-
-```{r}
+# Create a list of countries ordered by the number of shows and movies
 countries_list <- df_netflix_shows %>% 
   separate(netflix_titles.country, "first_country", ",") %>%
   group_by(first_country) %>%
@@ -53,22 +30,9 @@ countries_list <- df_netflix_shows %>%
 
 countries_list[1:10]
 ```
-```{r}
-df_netflix_shows %>% 
-  separate(netflix_titles.country, "first_country", ",") %>%  
-  filter(first_country %in% countries_list[1:10] &
-           netflix_titles.type == "Movie") %>%
-
-  ggplot(aes(fct_rev(first_country), netflix_titles.release_year, fill = first_country)) +
-  geom_violin(alpha = 0.7, show.legend = FALSE) +
-  coord_flip() +
-  theme_classic() +
-  scale_fill_brewer(palette = "Paired")
-
-
-```
 
 ```{r}
+# Draw the rain clouds for countries with the highest number of shows and movies
 raincloud_plot <- df_netflix_shows %>% 
   separate(netflix_titles.country, "first_country", ",") %>%  
   filter(first_country %in% countries_list[1:5]) %>%
@@ -77,47 +41,25 @@ raincloud_plot <- df_netflix_shows %>%
                    alpha = 0.9, show.legend = TRUE) +
   geom_half_point(alpha = 0.9, size = 0.01, position = "nudge", side = "l") +
   coord_flip() +
-  theme_dark() +
-  theme(legend.position = c(0.8, 1.052), legend.direction = "horizontal", legend.title = element_blank()) +
-  labs(title = "Movies and TV Shows on Netflix",
-       x = "Country of Production", y = "Year of Release") +
-  scale_fill_brewer(palette = "Reds") +
-  scale_color_brewer(palette = "Reds")
+  theme(legend.position = c(0.83, 1), legend.direction = "horizontal", legend.title = element_blank(), 
+        legend.background = element_rect("black"), legend.text = element_text(color = "white"),
+        panel.background = element_rect("black"), plot.background = element_rect(fill = "black"),
+        panel.grid.major = element_blank(),  panel.grid.minor = element_blank(),
+        plot.title = element_text(color = "#E50914", size = 20, margin = margin(t = 10, b = -11), hjust = -1.7, 
+                                  face = "bold", family = "Sans"),
+        plot.caption = element_text(color = "white", size = 8, vjust = 5.8, family = "Sans"),
+        axis.title.x = element_text(color = "white", size = 14, vjust = 7.5, family = "Sans"),
+        axis.title.y = element_text(color = "white", size=14, family = "Sans"), 
+        axis.text.x = element_text(color = "white", size=10, vjust = 10, family = "Sans"), 
+        axis.text.y = element_text(color = "white", size=10, family = "Sans"),
+        axis.ticks = element_blank()) +
+  labs(title = "Movies and TV Shows on Netflix", x = "Country of Production", y = "Year of Release", 
+       caption = "Data: Kaggle | #TidyTuesday | @Alessine") +
+  scale_fill_manual(values = c("#E50914", "white")) +
+  scale_color_manual(values = c("#E50914", "white"))
+
 raincloud_plot
 
 ggsave("raincloud_plot.png", raincloud_plot)
 
 ```
-
-
-
-```{r, fig.width = 10, fig.height = 5}
-vioplot_movies <- df_netflix_shows %>% 
-  separate(netflix_titles.country, "first_country", ",") %>%  
-  filter(first_country %in% countries_list[1:10] &
-           netflix_titles.type == "Movie")
-
-vioplot_shows <- df_netflix_shows %>% 
-  separate(netflix_titles.country, "first_country", ",") %>%  
-  filter(first_country %in% countries_list[1:10] &
-           netflix_titles.type == "TV Show")
-
-vioplot_shows$first_country <- str_replace_all(vioplot_shows$first_country, " ", "\n")
-
-png("split_violin.png", width = 1000, height = 500)
-vioplot(netflix_titles.release_year~first_country, data = vioplot_shows, col = "orange", plotCentre = "line", side = "right",
-        xlab = "Countries", ylab = "Year", main = "Movies and TV Shows on Netflix")
-vioplot(netflix_titles.release_year~first_country, data = vioplot_movies , col = "skyblue", plotCentre = "line", side = "left", add = T)
-legend("bottomleft", fill = c("skyblue", "orange"), legend = c("Movies", "TV Shows"))
-dev.off()
-```
-
-
-
-```{r}
-# Look for specific actors
-
-sum(str_detect(df_netflix_shows$netflix_titles.cast, "Shah Rukh Khan"), na.rm = TRUE)
-```
-
-
