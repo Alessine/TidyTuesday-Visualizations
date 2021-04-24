@@ -9,13 +9,7 @@ Each of the folders in this repository contains some example visualizations and 
 ### Week 17 - Netflix movies and TV shows
 This week the data comes from [Kaggle](https://www.kaggle.com/shivamb/netflix-shows?select=netflix_titles.csv) with credit to Shivam Bansal.
 
-Violin plots are useful for visualizing the distributions of categorical variables, so I created two different versions to show different aspects of the data:
-
-1. I selected the ten countries with the highest number of TV Shows and Movies on Netflix and created a split violin plot for each of them. The distributions show how the origin of movies and shows changes over the years, from mostly American productions to a more diversified portfolio.
-
-![](2021W17_Netflix_Shows/split_violin.png)
-
-2. I used the gghalves library to draw rain cloud plots, which consist of a half-violin plot and a scatter plot below, for the five countries with the highest number of movies and shows on Netflix. These plots give an idea of the absolute number of data points, while also showing their distribution.
+I was interested in where Netflix movies and TV shows come from, so I created rain cloud plots for the five countries with the highest number of movies and shows, using the gghalves library. These plots give an idea of the absolute number of data points, while also showing their distribution. Additionally, I worked on the theme to align it with Netflix branding.
 
 ![](2021W17_Netflix_Shows/raincloud_plot.png)
 
