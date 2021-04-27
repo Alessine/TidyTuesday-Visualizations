@@ -1,0 +1,79 @@
+---
+title: "210427_tidytuesday_ceo_departures"
+author: "Angela"
+date: "4/27/2021"
+output: html_document
+---
+
+```{r}
+knitr::opts_chunk$set(echo = FALSE, messages = FALSE, warnings = FALSE)
+```
+
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+library(vioplot)
+library(gghalves)
+```
+
+```{r}
+# Read in the data from the tidy tuesday library.
+tuesdata <- tidytuesdayR::tt_load(2021, week = 18)
+readme(tuesdata)
+```
+
+
+```{r}
+ceo_departures <- tuesdata$departures
+ceo_departures
+```
+
+```{r}
+number_dep <- ceo_departures %>%
+  group_by(gvkey) %>%
+  summarize(coname = coname[1], no_departures = n()) %>%
+  arrange(coname)
+```
+
+```{r}
+number_dep %>%
+  filter(no_departures >= 9)
+```
+
+
+```{r}
+library(ggthemes)
+set.seed(10)
+number_dep %>%
+  ggplot(aes(no_departures, coname)) +
+  geom_point(position = "jitter", color = "skyblue4") +
+  theme_classic() +
+  theme(plot.background = element_rect(fill = "lightgrey"),
+        plot.title = element_text(color = "skyblue4", size = 16, margin = margin(t = 8, b = 6), 
+                                  face = "bold", family = "Times"),
+        axis.title.x = element_text(color = "skyblue4", size = 12, family = "Times"), 
+        axis.text.x = element_text(color = "skyblue4", size = 10, family = "Times"), 
+        axis.title.y = element_blank(), axis.text.y = element_blank(), axis.ticks = element_blank(), 
+        plot.caption = element_text(color = "white", size = 8, vjust = 5.8, family = "Sans"),) +
+  labs(x = "Number of Departures", title = "How often did companies change their CEO between 2000 and 2018?") +
+  scale_x_continuous(breaks = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), labels = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)) +
+  annotate("text", x = 10, y = 3400, label = "Sears Holdings\nCorp.", family = "Times") +
+  geom_curve(aes(x = 10, y = 3100, xend = 10.9, yend = 3000), curvature = .4, arrow = arrow(length = unit(0.03, "npc"))) +
+  annotate("text", x = 10.5, y = 900, label = "Great Elm Capital\nGroup Inc.", family = "Times") +
+  geom_curve(aes(x = 10.5, y = 1150, xend = 10.05, yend = 1520), curvature = .4, arrow = arrow(length = unit(0.03, "npc")))
+  
+
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
