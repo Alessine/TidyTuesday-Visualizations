@@ -40,29 +40,33 @@ number_dep %>%
   filter(no_departures >= 9)
 ```
 
-
+color = "skyblue4", 
 ```{r}
-library(ggthemes)
 set.seed(10)
-number_dep %>%
+num_dep_scatter <- number_dep %>%
   ggplot(aes(no_departures, coname)) +
-  geom_point(position = "jitter", color = "skyblue4") +
+  geom_point(size = 0.5, position = "jitter", color = "skyblue4") +
   theme_classic() +
   theme(plot.background = element_rect(fill = "lightgrey"),
-        plot.title = element_text(color = "skyblue4", size = 16, margin = margin(t = 8, b = 6), 
+        plot.title = element_text(size = 16, margin = margin(t = 8, b = 6), 
                                   face = "bold", family = "Times"),
-        axis.title.x = element_text(color = "skyblue4", size = 12, family = "Times"), 
-        axis.text.x = element_text(color = "skyblue4", size = 10, family = "Times"), 
-        axis.title.y = element_blank(), axis.text.y = element_blank(), axis.ticks = element_blank(), 
+        axis.title.x = element_text(size = 12, family = "Times"), 
+        axis.text.x = element_text(size = 10, family = "Times"), 
+        axis.title.y = element_blank(), axis.text.y = element_blank(), 
+        axis.ticks = element_blank(), axis.line = element_blank(),
         plot.caption = element_text(color = "white", size = 8, vjust = 5.8, family = "Sans"),) +
   labs(x = "Number of Departures", title = "How often did companies change their CEO between 2000 and 2018?") +
   scale_x_continuous(breaks = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), labels = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)) +
-  annotate("text", x = 10, y = 3400, label = "Sears Holdings\nCorp.", family = "Times") +
-  geom_curve(aes(x = 10, y = 3100, xend = 10.9, yend = 3000), curvature = .4, arrow = arrow(length = unit(0.03, "npc"))) +
-  annotate("text", x = 10.5, y = 900, label = "Great Elm Capital\nGroup Inc.", family = "Times") +
-  geom_curve(aes(x = 10.5, y = 1150, xend = 10.05, yend = 1520), curvature = .4, arrow = arrow(length = unit(0.03, "npc")))
+  annotate("text", x = 10, y = 3400, label = "Sears Holdings\nCorp.", family = "Times", fontface = "italic") +
+  geom_curve(aes(x = 10, y = 3100, xend = 10.9, yend = 3020), curvature = .4, 
+             arrow = arrow(length = unit(0.03, "npc")), size = 0.2, angle = 120) +
+  annotate("text", x = 10.5, y = 900, label = "Great Elm Capital\nGroup Inc.", family = "Times", fontface = "italic") +
+  geom_curve(aes(x = 10.5, y = 1160, xend = 10.15, yend = 1520), curvature = .4, 
+             arrow = arrow(length = unit(0.03, "npc")), size = 0.2, angle = 50)
   
+num_dep_scatter
 
+ggsave("scatterplot_num_departures.jpg", num_dep_scatter)
 ```
 
 
