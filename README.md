@@ -9,6 +9,10 @@ Each of the folders in this repository contains some example visualizations and 
 ### Week 18 - CEO Departures
 This week's data set contains information on CEOs in S&P 1500 firms from 2000 through 2018. It documents their departure from the company and the reason for leaving. Credit goes to [Gentry et al.](https://onlinelibrary.wiley.com/doi/abs/10.1002/smj.3278) by way of [DataIsPlural](https://www.data-is-plural.com/archive/2021-04-21-edition/).
 
+I want to create a dashboard showing several aspects in different figures. So far I have created the following scatter plot, which shows how many times the CEO of each company changed between 2000 and 2018.
+
+![](2021W18_CEO_Departures/scatterplot_num_departures.jpg)
+
 ### Week 17 - Netflix movies and TV shows
 This week the data came from [Kaggle](https://www.kaggle.com/shivamb/netflix-shows?select=netflix_titles.csv) with credit to Shivam Bansal.
 
