@@ -71,10 +71,41 @@ ggsave("scatterplot_num_departures.jpg", num_dep_scatter)
 
 
 ```{r}
+ceo_departures <- ceo_departures %>%
+  mutate(departure_reason = case_when(
+    departure_code == 1 ~ "Death",
+    departure_code == 2 ~ "Illness",
+    departure_code == 3 ~ "Job Performance",
+    departure_code == 4 ~ "Legal Concerns",
+    departure_code == 5 ~ "Retirement",
+    departure_code == 6 ~ "New Opportunity",
+    departure_code == 7 ~ "Other",
+    departure_code == 8 ~ "Missing",
+    departure_code == 9 ~ "Error"
+  ))
 ```
 
 
-```{r}
+```{r, fig.width = 5, fig.height = 5}
+dep_reasons_bar <- ceo_departures %>%
+  filter(!departure_reason %in% c("Error", "Missing") & !is.na(departure_reason)) %>%
+  mutate(departure_reason = forcats::fct_infreq(departure_reason)) %>%
+  ggplot(aes(fct_rev(departure_reason))) +
+  geom_bar(fill = "skyblue4", stat = "count") +
+  coord_flip() +
+  theme_classic() +
+  theme(plot.background = element_rect(fill = "lightgrey"),
+        plot.title = element_text(size = 16, margin = margin(t = 8, b = 6), 
+                                  face = "bold", family = "Times"),
+        axis.title.x = element_text(size = 12, family = "Times"), 
+        axis.text.x = element_text(size = 10, family = "Times"), 
+        axis.title.y = element_blank(), 
+        axis.text.y = element_text(size = 10, family = "Times"), 
+        axis.ticks = element_blank(), axis.line = element_blank(),
+        plot.caption = element_text(color = "white", size = 8, vjust = 5.8, family = "Sans"),) +
+  labs(y = "Number of Departures", title = "Why did CEOs leave?")
+
+dep_reasons_bar
 ```
 
 
