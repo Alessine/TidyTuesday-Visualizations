@@ -11,7 +11,7 @@ This week's data set contains information on CEOs in S&P 1500 firms from 2000 th
 
 I want to create a dashboard showing several aspects in different figures. So far I have created the following scatter plot, which shows how many times the CEO of each company changed between 2000 and 2018.
 
-![](2021W18_CEO_Departures/scatterplot_num_departures.jpg)
+![](2021W18_CEO_Departures/all_plots_combined.jpg)
 
 ### Week 17 - Netflix movies and TV shows
 This week the data came from [Kaggle](https://www.kaggle.com/shivamb/netflix-shows?select=netflix_titles.csv) with credit to Shivam Bansal.
