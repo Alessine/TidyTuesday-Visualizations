@@ -12,8 +12,9 @@ knitr::opts_chunk$set(echo = FALSE, messages = FALSE, warnings = FALSE)
 ```{r}
 library(tidytuesdayR)
 library(tidyverse)
-library(vioplot)
-library(gghalves)
+library(ggResidpanel)
+library(ggtext)
+library(ggpubr)
 ```
 
 ```{r}
@@ -30,17 +31,15 @@ ceo_departures
 
 ```{r}
 number_dep <- ceo_departures %>%
+  filter(!departure_code == 9, 
+         !is.na(ceo_dismissal),
+         between(fyear, 1996, 2018)) %>%
   group_by(gvkey) %>%
   summarize(coname = coname[1], no_departures = n()) %>%
   arrange(coname)
 ```
 
-```{r}
-number_dep %>%
-  filter(no_departures >= 9)
-```
 
-color = "skyblue4", 
 ```{r, fig.width = 5, fig.height = 5}
 set.seed(10)
 num_dep_scatter <- number_dep %>%
@@ -48,25 +47,20 @@ num_dep_scatter <- number_dep %>%
   geom_point(size = 0.5, position = "jitter", color = "skyblue4") +
   theme_classic() +
   theme(plot.background = element_rect(fill = "lightgrey"),
-        plot.title = element_text(size = 16, margin = margin(t = 8, b = 6), 
+        plot.title = element_text(size = 14, margin = margin(t = 8, b = 6), 
                                   face = "bold", family = "Times"),
         axis.title.x = element_text(size = 12, family = "Times"), 
         axis.text.x = element_text(size = 10, family = "Times"), 
-        axis.title.y = element_blank(), axis.text.y = element_blank(), 
+        axis.title.y = element_text(size = 12, family = "Times"), 
+        axis.text.y = element_blank(), 
         axis.ticks = element_blank(), axis.line = element_blank(),
-        plot.caption = element_text(color = "white", size = 8, vjust = 5.8, family = "Sans"),) +
-  labs(x = "Number of Departures", title = "How often did companies replace their CEO?") +
-  scale_x_continuous(breaks = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12), labels = c(0, 1, 2, 3, 4, 5, 6, 7, 8, 9, 10, 11, 12)) +
-  annotate("text", x = 10, y = 3400, label = "Sears Holdings\nCorp.", family = "Times", fontface = "italic") +
-  geom_curve(aes(x = 10, y = 3100, xend = 10.9, yend = 3020), curvature = .4, 
-             arrow = arrow(length = unit(0.03, "npc")), size = 0.2, angle = 120) +
-  annotate("text", x = 10, y = 900, label = "Great Elm Capital\nGroup Inc.", family = "Times", fontface = "italic") +
-  geom_curve(aes(x = 10.2, y = 1160, xend = 10.1, yend = 1500), curvature = .2, 
-             arrow = arrow(length = unit(0.03, "npc")), size = 0.2, angle = 50)
-  
+        plot.caption = element_text(color = "white", size = 8, vjust = 5.8, family = "Sans"),
+        plot.margin = unit(c(0.2, 0.5, 0.5, 1),"cm")) +
+  labs(x = "Number of Departures per Company", y = "Companies", title = "How often did companies replace their CEO?") +
+  scale_x_continuous(breaks = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10), labels = c(1, 2, 3, 4, 5, 6, 7, 8, 9, 10))
+
 num_dep_scatter
 
-ggsave("scatterplot_num_departures.jpg", num_dep_scatter)
 ```
 
 
@@ -85,31 +79,93 @@ ceo_departures <- ceo_departures %>%
   ))
 ```
 
-
+vjust = 5.8,
 ```{r, fig.width = 5, fig.height = 5}
 dep_reasons_bar <- ceo_departures %>%
-  filter(!departure_reason %in% c("Error", "Missing") & !is.na(departure_reason)) %>%
+  filter(!departure_reason %in% c("Error", "Missing") & 
+           !is.na(departure_reason) &
+           between(fyear, 1996, 2018)) %>%
   mutate(departure_reason = forcats::fct_infreq(departure_reason)) %>%
-  ggplot(aes(fct_rev(departure_reason))) +
-  geom_bar(fill = "skyblue4", stat = "count") +
+  ggplot(aes(fct_rev(departure_reason), fill = as.factor(ceo_dismissal))) +
+  geom_bar(stat = "count") +
   coord_flip() +
   theme_classic() +
-  theme(plot.background = element_rect(fill = "lightgrey"),
-        plot.title = element_text(size = 16, margin = margin(t = 8, b = 6), 
+  theme(legend.position = "none", 
+        plot.background = element_rect(fill = "lightgrey"),
+        plot.title = element_text(size = 14, margin = margin(t = 8, b = 6), 
                                   face = "bold", family = "Times"),
         axis.title.x = element_text(size = 12, family = "Times"), 
         axis.text.x = element_text(size = 10, family = "Times"), 
         axis.title.y = element_blank(), 
         axis.text.y = element_text(size = 10, family = "Times"), 
         axis.ticks = element_blank(), axis.line = element_blank(),
-        plot.caption = element_text(color = "white", size = 8, vjust = 5.8, family = "Sans"),) +
-  labs(y = "Number of Departures", title = "Why did CEOs leave?")
+        plot.caption = element_text(color = "black", size = 8, hjust = 0, family = "Times"),
+        plot.margin = unit(c(0.2, 0.5, 0.5, 0.5),"cm")) +
+  labs(y = "Number of Departures", title = "Why did CEOs leave?") +
+  scale_color_manual(values = c("skyblue4", "lightpink3")) +
+  scale_fill_manual(values = c("skyblue4", "lightpink3"))
 
 dep_reasons_bar
-ggsave("barplot_departure_reasons.jpg", dep_reasons_bar)
 ```
-
 
 ```{r}
+scatter_lm_plot <- ceo_departures %>%
+  filter(!departure_code == 9,
+         !is.na(ceo_dismissal),
+         between(fyear, 1996, 2018)) %>%
+  count(fyear, ceo_dismissal) %>%
+  ggplot(aes(fyear, n, color = as.factor(ceo_dismissal))) +
+  geom_line(linejoin = "round") +  
+  geom_point() +
+  geom_smooth(method = "lm", linetype = "dashed") +
+  theme_classic() +
+  theme(legend.position = c(0.85, 0.89), legend.direction = "vertical", legend.title = element_blank(), 
+        legend.text = element_text(size = 10, family = "Times"),
+        plot.background = element_rect(fill = "lightgrey"), 
+        plot.title = element_textbox_simple(size = 12, margin = margin(t = 8, b = 6), padding = margin(5.5, 5.5, 5.5, 5.5),
+                                  family = "Times", fill = "cornsilk"),
+        axis.title.x = element_blank(), 
+        axis.text.x = element_text(size = 10, family = "Times"), 
+        axis.title.y = element_text(size = 12, family = "Times"), 
+        axis.text.y = element_text(size = 10, family = "Times"), 
+        axis.ticks = element_blank(), axis.line = element_blank(),
+        plot.caption = element_text(color = "black", size = 8, margin = margin(t = 8, b = 1), family = "Times"),
+        plot.margin = unit(c(0.2, 0.5, 0.3, 0.4),"cm")) +
+  labs(y = "Number of Departures", 
+       title = "<b><span style = 'font-size:16pt;face:bold'>Are CEO dismissals getting more common?</span></b><br>From 1996 to 2018, there was a downward trend in voluntary departures, while the amount of dismissals remained almost constant. Therefore the likelihood that a departure was involuntary has slightly increased.", 
+       caption = "Data: Gentry et al. (2021) | #TidyTuesday | @Alessine") +
+  scale_color_manual(values = c("skyblue4", "lightpink3"), labels = c("voluntary / health", "dismissal")) +
+  scale_fill_manual(values = c("skyblue4", "lightpink3"), labels = c("voluntary / health", "dismissal"))
+
+scatter_lm_plot
 ```
+
+```{r}
+dep_by_year <- ceo_departures %>%
+  filter(!departure_code == 9,
+         !is.na(ceo_dismissal),
+         between(fyear, 1996, 2018)) %>%
+  count(fyear, ceo_dismissal) %>%
+  pivot_wider(names_from = ceo_dismissal, values_from = n) %>%
+  rename("dismissal" = "1", "other" = "0")
+
+dep_by_year
+```
+
+```{r}
+bin_model <- glm(cbind(dismissal, other) ~ fyear, family = "binomial", data = dep_by_year)
+tidy(bin_model, exponentiate = TRUE)
+```
+
+```{r}
+resid_panel(bin_model)
+```
+
+
+```{r, fig.width = 10, fig.height = 8}
+combined_plots <- ggarrange(scatter_lm_plot, ggarrange(num_dep_scatter, dep_reasons_bar, ncol = 2), nrow = 2, heights = c(1.5, 1))
+combined_plots
+ggsave("all_plots_combined.jpg", combined_plots)
+```
+
 
