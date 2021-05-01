@@ -9,7 +9,7 @@ Each of the folders in this repository contains some example visualizations and 
 ### Week 18 - CEO Departures
 This week's data set contains information on CEOs in S&P 1500 firms from 2000 through 2018. It documents their departure from the company and the reason for leaving. Credit goes to [Gentry et al.](https://onlinelibrary.wiley.com/doi/abs/10.1002/smj.3278) by way of [DataIsPlural](https://www.data-is-plural.com/archive/2021-04-21-edition/).
 
-I created this combined plot showing different aspects in several figures. The main plot shows a simple regression, which was inspired by Julia Silge's TidyTuesday contribution for this week. The smaller two plots show (1) how many times each company has changed its CEO and (2) the reasons for the turnover.
+I created this combined plot showing different aspects in several figures. The main plot shows a regression, which was inspired by Julia Silge's TidyTuesday contribution for this week. The smaller two plots show (1) how many times each company has changed its CEO and (2) the reasons for the turnover.
 
 ![](2021W18_CEO_Departures/all_plots_combined.jpg)
 
