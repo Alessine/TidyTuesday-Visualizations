@@ -4,6 +4,13 @@ This is the repository for all of my contributions to #TidyTuesday, an initiativ
 
 Each of the folders in this repository contains some example visualizations and the code I wrote to create them. So far, I have worked on the following data sets:
 
+## May 2021
+
+### Week 19 - Water Sources in Africa
+This is a really interesting dataset and I have so many ideas. The first thing I did was to create this histogram to show what proportion of the installed water sources were still functional at the time of the visit.
+
+![](2021W19_water_sources/210405_functionality_histogram.jpg)
+
 ## April 2021
 
 ### Week 18 - CEO Departures
