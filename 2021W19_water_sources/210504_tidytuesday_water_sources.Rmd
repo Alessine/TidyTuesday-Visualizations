@@ -1,0 +1,60 @@
+---
+title: "210504_tidytuesday_water_sources"
+author: "Angela"
+date: "5/4/2021"
+output: html_document
+---
+
+```{r}
+knitr::opts_chunk$set(echo = FALSE, messages = FALSE, warnings = FALSE)
+```
+
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+library(ggResidpanel)
+library(ggtext)
+library(ggpubr)
+```
+
+
+```{r}
+# Read in the data from the tidy tuesday library.
+tuesdata <- tidytuesdayR::tt_load(2021, week = 19)
+readme(tuesdata)
+```
+
+
+
+```{r}
+water_sources <- tuesdata$water
+water_sources
+```
+
+
+```{r}
+table(water_sources_reduced$status_id)
+```
+
+
+```{r}
+water_sources_reduced <- water_sources %>%
+  filter(!is.na(status),
+         !is.na(pay)) %>%
+  mutate(functional_yes_no = ifelse(status %in% c("Functional", "Functional (not in use)", "Functional (but not in use)",
+                                                  "Functional (and in use)", "Functional and in use") | 
+                                    str_detect(status, "Enough Water Quantity"), 1, 0))
+water_sources_reduced
+```
+
+
+```{r}
+water_sources_reduced %>%
+  filter(!status_id == "u") %>%
+  count()
+  ggplot(aes(install_year, color = status_id)) +
+  geom_line()
+```
+
+
+
