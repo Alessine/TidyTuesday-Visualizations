@@ -7,7 +7,7 @@ Each of the folders in this repository contains some example visualizations and 
 ## May 2021
 
 ### Week 19 - Water Sources in Africa
-This is a really interesting data set from , but I just could not find the time to work on it. Nevertheless, I quickly created this histogram to show what proportion of the installed water sources were still functional at the time of the visit. I thought it was great to see that so many of them continue to be used!
+This is a really interesting data set from [Water Point Data Exchange](https://data.waterpointdata.org/dataset/Water-Point-Data-Exchange-WPDx-Basic-/jfkt-jmqa), but I just could not find the time to work on it. Nevertheless, I quickly created this histogram to show what proportion of the installed water sources were still functional at the time of the visit. I thought it was great to see that so many of them continue to be used!
 
 ![](2021W19_water_sources/210405_functionality_histogram.jpg)
 
