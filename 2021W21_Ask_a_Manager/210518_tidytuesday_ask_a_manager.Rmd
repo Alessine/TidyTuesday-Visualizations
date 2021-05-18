@@ -1,0 +1,86 @@
+---
+title: "210504_tidytuesday_ask_a_manager"
+author: "Angela"
+date: "5/4/2021"
+output: html_document
+---
+
+```{r}
+knitr::opts_chunk$set(echo = FALSE, messages = FALSE, warnings = FALSE)
+```
+
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+library(ggResidpanel)
+library(ggtext)
+library(ggpubr)
+```
+
+
+```{r}
+# Read in the data from the tidy tuesday library.
+tuesdata <- tidytuesdayR::tt_load(2021, week = 21)
+readme(tuesdata)
+```
+
+
+
+```{r}
+survey <- tuesdata$survey
+survey$country
+```
+
+```{r}
+# Some basic cleaning of strings
+
+survey$how_old_are_you <- factor(survey$how_old_are_you, levels = c("under 18", "18-24", "25-34", "35-44", "45-54",
+                                                                       "55-64", "65 or over"))
+
+survey$country <- str_to_title(survey$country)
+survey$country <- if_else(survey$country %in% c("California", "San Francisco", "The United States", "The Us", "U. S", "U. S.", "U.s",
+                                                "U.s.", "U.s.a", "U.s.a.", "U.s>", "U.sa", "Uniited States", "Unite States", 
+                                                "United  States", 
+                                                "United Sates", "United Sates Of America", "United Stares", "United State", 
+                                                "United State Of America", "United Statea", "United Stated", "United Stateds", 
+                                                "United Statees", "United States Of America", "United States Of American", 
+                                                "United States Of Americas", "United Statesp", "United Statew", "United Statss", 
+                                                "United Stattes", "United Statues", "United Status", "United Statws", "United Sttes",
+                                                "Unitedstates", "Uniteed States", "Unitef Stated", "Uniter Statez", "Unites States", 
+                                                "Unitied States", "Uniyed States", "Uniyes States", "Unted States", "Untied States", 
+                                                "Us", "Us Of A", "Usa", "Usaa"), "United States", survey$country)
+           
+  #       , "United States") #%>%
+#  str_replace_all("|||||||", "United Kingdom")
+
+                    
+```                    
+                    
+
+```{r}
+
+```
+
+```{r}
+unique(survey$country)
+```
+
+
+```{r}
+functionality_histogram <- water_sources_reduced %>%
+  ggplot(aes(install_year, fill = status_id)) +
+  geom_histogram(binwidth = 1) +
+  theme_light() +
+  theme(panel.grid.minor = element_blank()) +
+  labs(title = "Number of Functional and Non-Functional Water Sources",
+       x = "Year installed", y = NULL, fill = "Functionality") +
+  scale_fill_manual(values = c("lightgrey", "skyblue3"), labels = c("No", "Yes")) +
+  scale_y_continuous(labels = function(x) format(x, big.mark = "'", scientific = FALSE))
+
+functionality_histogram
+
+ggsave("210405_functionality_histogram.jpg", functionality_histogram)¨
+```
+
+
+
