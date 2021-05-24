@@ -23,11 +23,26 @@ library(ggpubr)
 tuesdata <- tidytuesdayR::tt_load(2021, week = 21)
 readme(tuesdata)
 ```
+
 ```{r}
 # Some basic cleaning of strings
 survey <- tuesdata$survey
 survey$how_old_are_you <- factor(survey$how_old_are_you, levels = c("under 18", "18-24", "25-34", "35-44", "45-54",
                                                                        "55-64", "65 or over"))
+
+survey <- survey %>%
+  mutate(overall_years_of_professional_experience = str_replace_all(overall_years_of_professional_experience, 
+                                                                    c("year " = "", " years" = "")),
+         years_of_experience_in_field = str_replace_all(years_of_experience_in_field, 
+                                                                    c("year " = "", " years" = ""))) %>% 
+  mutate(overall_years_of_professional_experience = if_else(overall_years_of_professional_experience %in% 
+                                                              c("1 or less", "41 or more"), 
+                                                            overall_years_of_professional_experience, 
+                                                            str_replace_all(overall_years_of_professional_experience, " ", "")),
+         years_of_experience_in_field = if_else(years_of_experience_in_field %in% 
+                                                              c("1 or less", "41 or more"), 
+                                                            years_of_experience_in_field, 
+                                                            str_replace_all(years_of_experience_in_field, " ", "")))
 
 survey$country <- str_to_title(survey$country)
 survey$country <- if_else(survey$country %in% c("California", "San Francisco", "The United States", "The Us", "U. S", "U. S.", "U.s",
@@ -41,11 +56,27 @@ survey$country <- if_else(survey$country %in% c("California", "San Francisco", "
                                                 "Unitied States", "Uniyed States", "Uniyes States", "Unted States", "Untied States", 
                                                 "Us", "Us Of A", "Usa", "Usaa"), "United States", survey$country)
            
+survey$gender[which(survey$gender == "Prefer not to answer")] <- "Other or prefer not to answer"
 ```                    
-                    
+
 
 ```{r}
-unique(survey$country)
+colnames(survey)
+
+```
+
+```{r}
+table(survey$race)
+```
+
+
+
+```{r}
+regression_df <- survey %>%
+  filter(country == "United States") %>%
+  select(c(2, 3, 6, 12:18))
+
+head(regression_df)
 ```
 
 
