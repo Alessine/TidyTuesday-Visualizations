@@ -61,12 +61,61 @@ survey$gender[which(survey$gender == "Prefer not to answer")] <- "Other or prefe
 
 
 ```{r}
-colnames(survey)
+# Select only the rows that I want to use.
+
+survey_reduced <- survey %>%
+  filter(country == "United States", currency == "USD", !is.na(gender),
+         !how_old_are_you %in% c("under 18", "65 or over")) %>%
+  group_by(race) %>%
+  filter(n() >= 500) %>%
+  ungroup()
 
 ```
 
+
 ```{r}
-table(survey$race)
+library(grid)
+annotations <- data.frame(label = "Age Group", 
+                          how_old_are_you = c("35-44"))
+
+survey_reduced %>%
+  ggplot(aes(y = annual_salary, x = race, fill = how_old_are_you)) +
+  geom_boxplot(alpha = 0.8, show.legend = FALSE) +
+  facet_grid(how_old_are_you~.)  +
+#  scale_x_continuous(sec.axis = dup_axis(name = "Bla Bla Bla")) +
+  scale_y_continuous(name = "Annual Salary", limits = c(0, 500000), breaks = c(100000, 200000, 300000, 400000, 500000)) +
+  scale_fill_brewer(palette = "Paired") +
+  coord_flip(clip = "off") +
+  theme_pubclean() +
+  labs(title = "<b><span style = 'font-size:16pt;face:bold'>Manager Salaries in the US</span></b><br>Data from the Ask a Manager Survey", 
+       x = "Race",
+       caption = "Data: Gentry et al. (2021) | #TidyTuesday | @Alessine") +)  +
+  theme(
+    axis.title.y = element_text(),
+    axis.title.y.right = element_text())
+#  geom_text(data = annotations, 
+#            mapping = aes(x = 5, y = 500000, label = label), 
+#            hjust   = -0.1, 
+#            vjust   = -1,
+#            angle = -90)
+
+"Are CEO dismissals getting more common?From 1996 to 2018, there was a downward trend in voluntary departures, while the amount of dismissals remained almost constant. Therefore the likelihood that a departure was involuntary has slightly increased."
+
+```
+
+
+```{r}
+colnames(survey_reduced)
+
+```
+
+
+
+```{r}
+linmod_1 <- lm(annual_salary ~ how_old_are_you + industry + state + gender + race, data = survey_reduced)
+
+summary(linmod_1)
+resid_panel(linmod_1)
 ```
 
 
