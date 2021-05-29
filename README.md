@@ -6,6 +6,11 @@ Each of the folders in this repository contains some example visualizations and 
 
 ## May 2021
 
+### Week 21 - Manager Salaries
+The data this week comes from the [Ask A Manager Survey](https://docs.google.com/spreadsheets/d/1IPS5dBSGtwYVbjsfbaMCYIWnOuRmJcbequohNxCyGVw/edit?resourcekey#gid=1625408792). I wanted to see the differences in salaries by age and race, so I created boxplots for all these different groups. The dataset is quite imbalanced because most of the respondents were white and female. However, it still gives some interesting insights into how these factors appear to influence the salary level.
+
+![](2021W21_Ask_a_Manager/boxplots_salaries.png)
+
 ### Week 19 - Water Sources in Africa
 This is a really interesting data set from [Water Point Data Exchange](https://data.waterpointdata.org/dataset/Water-Point-Data-Exchange-WPDx-Basic-/jfkt-jmqa), but I just could not find the time to work on it. Nevertheless, I quickly created this histogram to show what proportion of the installed water sources were still functional at the time of the visit. I thought it was great to see that so many of them continue to be used!
 
