@@ -63,7 +63,7 @@ sb_fish_data
 ```
 
 ```{r}
-fish_by_year
+fish_by_species
 ```
 
 
@@ -73,9 +73,18 @@ fish_by_year <- sb_fish_data %>%
   summarize(values = sum(total)) %>%
   arrange(-year)
 
-fish_labels = c("Lake Erie", fish_by_year$year)
-fish_parents = c("", replicate(length(fish_labels)-1, "Lake Erie"))
-fish_values = c(sum(fish_by_year$values), fish_by_year$values)
+fish_by_species <- sb_fish_data %>%
+  group_by(year, species) %>%
+  summarize(values = sum(total)) %>%
+  filter(values > 0) %>%
+  arrange(-year)
+
+fish_labels = c("Lake Erie", fish_by_year$year, fish_by_species$species)
+fish_parents = c("", replicate(length(fish_by_year$year), "Lake Erie"), fish_by_species$year)
+fish_values = c(sum(fish_by_year$values), fish_by_year$values, fish_by_species$values)
+```
+```{r}
+length(fish_by_year$year)
 ```
 
 
@@ -116,6 +125,7 @@ sb_fish_plot
 
 
 ```{r}
+
 ```
 
 
