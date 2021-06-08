@@ -1,0 +1,39 @@
+---
+title: "210504_tidytuesday_great_lakes_fish"
+author: "Angela"
+date: "8/6/2021"
+output: html_document
+---
+
+```{r}
+knitr::opts_chunk$set(echo = FALSE, messages = FALSE, warnings = FALSE)
+```
+
+```{r}
+library(tidytuesdayR)
+library(tidyverse)
+
+```
+
+
+```{r}
+# Read in the data from the tidy tuesday library.
+tuesdata <- tidytuesdayR::tt_load('2021-06-08')
+readme(tuesdata)
+```
+
+```{r}
+fishing <- tuesdata$fishing
+head(fishing)
+```
+
+
+```{r}
+hist(fishing$grand_total, breaks = 50)
+
+```
+
+
+
+
+
