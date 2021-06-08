@@ -29,11 +29,8 @@ head(fishing)
 
 
 ```{r}
-hist(fishing$grand_total, breaks = 50)
+# Getting a basic understanding of what the data looks like
 
-```
-
-```{r}
 fishing %>%
   filter(between(year, 1910, 2010),
       #    species %in% c("Rainbow Smelt", "Lake Whitefish", "Walleye", "Yellow Perch"),
@@ -43,14 +40,14 @@ fishing %>%
   group_by(year, species) %>%
   summarize(total = sum(grand_total, na.rm =TRUE)) %>%
   ggplot(aes(x = year, y = total, color = species)) +
-  geom_bar(stat = "identity") +
-  coord_polar()
+  geom_bar(stat = "identity", show.legend = FALSE)
     
   
 ```
 
 
 ```{r}
+# Selecting only the rows that I want to show
 sb_fish_data <- fishing %>%
   filter(between(year, 1990, 2010),
          lake == "Erie"
@@ -62,12 +59,11 @@ sb_fish_data <- fishing %>%
 sb_fish_data
 ```
 
-```{r}
-fish_by_species
-```
 
 
 ```{r}
+# Wrangling the data into the lists that I need for plotly
+
 fish_by_year <- sb_fish_data %>%
   group_by(year) %>%
   summarize(values = sum(total)) %>%
@@ -83,23 +79,17 @@ fish_labels = c("Lake Erie", fish_by_year$year, fish_by_species$species)
 fish_parents = c("", replicate(length(fish_by_year$year), "Lake Erie"), fish_by_species$year)
 fish_values = c(sum(fish_by_year$values), fish_by_year$values, fish_by_species$values)
 ```
-```{r}
-length(fish_by_year$year)
-```
 
 
 ```{r}
+# Checking if all the lists have the same length
 length(fish_labels) 
 length(fish_parents)
 length(fish_values)
 ```
 
 ```{r}
-fish_labels
-```
-
-
-```{r}
+# Sunburst plot - some of the labels are identical, so I need to add ids.
 sb_fish_plot <- plot_ly(
   labels = fish_labels,
   parents = fish_parents,
@@ -108,7 +98,6 @@ sb_fish_plot <- plot_ly(
   branchvalues = 'total',
   sort = FALSE
 )
-  
   
 sb_fish_plot  
 ```
