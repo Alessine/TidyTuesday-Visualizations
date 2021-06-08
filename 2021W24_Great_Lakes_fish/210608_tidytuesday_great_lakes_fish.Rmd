@@ -33,6 +33,112 @@ hist(fishing$grand_total, breaks = 50)
 
 ```
 
+```{r}
+fishing %>%
+  filter(between(year, 1910, 2010),
+      #    species %in% c("Rainbow Smelt", "Lake Whitefish", "Walleye", "Yellow Perch"),
+         lake == "Erie"
+     
+         ) %>%
+  group_by(year, species) %>%
+  summarize(total = sum(grand_total, na.rm =TRUE)) %>%
+  ggplot(aes(x = year, y = total, color = species)) +
+  geom_bar(stat = "identity") +
+  coord_polar()
+    
+  
+```
+
+
+```{r}
+sb_fish_data <- fishing %>%
+  filter(between(year, 1990, 2010),
+         lake == "Erie"
+         ) %>%
+  group_by(year, species) %>%
+  summarize(total = sum(grand_total, na.rm =TRUE)) %>%
+  arrange(-total)
+
+sb_fish_data
+```
+
+```{r}
+fish_by_year
+```
+
+
+```{r}
+fish_by_year <- sb_fish_data %>%
+  group_by(year) %>%
+  summarize(values = sum(total)) %>%
+  arrange(-year)
+
+fish_labels = c("Lake Erie", fish_by_year$year)
+fish_parents = c("", replicate(length(fish_labels)-1, "Lake Erie"))
+fish_values = c(sum(fish_by_year$values), fish_by_year$values)
+```
+
+
+```{r}
+length(fish_labels) 
+length(fish_parents)
+length(fish_values)
+```
+
+```{r}
+fish_labels
+```
+
+
+```{r}
+sb_fish_plot <- plot_ly(
+  labels = fish_labels,
+  parents = fish_parents,
+  values = fish_values,
+  type = 'sunburst',
+  branchvalues = 'total',
+  sort = FALSE
+)
+  
+  
+sb_fish_plot  
+```
+
+
+
+```{r}
+library(plotly)
+
+fig <- plot_ly(
+  labels = c("Eve", "Cain", "Seth", "Enos", "Noam", "Abel", "Awan", "Enoch", "Azura"),
+  parents = c("", "Eve", "Eve", "Seth", "Seth", "Eve", "Eve", "Awan", "Eve"),
+  values = c(10, 14, 12, 10, 2, 6, 6, 4, 4),
+  type = 'sunburst'
+)
+
+fig
+
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
+
+
+```{r}
+```
 
 
 
