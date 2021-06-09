@@ -11,6 +11,8 @@ This dataset comes from the [Great Lakes Fishery Commission](http://www.glfc.org
 
 ![](2021W24_Great_Lakes_fish/erie_fish_plot.png)
 
+Check out the code [here](2021W24_Great_Lakes_fish/210608_tidytuesday_great_lakes_fish.Rmd).
+
 ## May 2021
 
 ### Week 21 - Manager Salaries
