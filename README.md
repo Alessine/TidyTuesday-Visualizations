@@ -4,6 +4,12 @@ This is the repository for all of my contributions to #TidyTuesday, an initiativ
 
 Each of the folders in this repository contains some example visualizations and the code I wrote to create them. So far, I have worked on the following data sets:
 
+## June 2021
+
+### Week 24 - Fish in the Great Lakes
+This data set comes from the [Great Lakes Fishery Commission](http://www.glfc.org/great-lakes-databases.php).
+
+
 ## May 2021
 
 ### Week 21 - Manager Salaries
