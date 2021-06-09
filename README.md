@@ -7,7 +7,8 @@ Each of the folders in this repository contains some example visualizations and 
 ## June 2021
 
 ### Week 24 - Fish in the Great Lakes
-This data set comes from the [Great Lakes Fishery Commission](http://www.glfc.org/great-lakes-databases.php).
+This dataset comes from the [Great Lakes Fishery Commission](http://www.glfc.org/great-lakes-databases.php). I have been looking for an opportunity to create sunburst plots and this seemed like the perfect dataset for it, with its nested structure (lakes - years - fish species). Below is the static plot for Lake Erie. If I get time, I'll see if I can arrange the plots for each lake in a dashboard to get an overview, while maintaining the interactivity that plotly offers.
+
 
 
 ## May 2021
