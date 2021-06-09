@@ -9,14 +9,16 @@ Each of the folders in this repository contains some example visualizations and 
 ### Week 24 - Fish in the Great Lakes
 This dataset comes from the [Great Lakes Fishery Commission](http://www.glfc.org/great-lakes-databases.php). I have been looking for an opportunity to create sunburst plots and this seemed like the perfect dataset for it, with its nested structure (lakes - years - fish species). Below is the static plot for Lake Erie. If I get time, I'll see if I can arrange the plots for each lake in a dashboard to get an overview, while maintaining the interactivity that plotly offers.
 
-![](2021W24_Great_Lakes_fish/erie_fish_plot.png)
-
 Check out the code [here](2021W24_Great_Lakes_fish/210608_tidytuesday_great_lakes_fish.Rmd).
+
+![](2021W24_Great_Lakes_fish/erie_fish_plot.png)
 
 ## May 2021
 
 ### Week 21 - Manager Salaries
 The data this week comes from the [Ask A Manager Survey](https://docs.google.com/spreadsheets/d/1IPS5dBSGtwYVbjsfbaMCYIWnOuRmJcbequohNxCyGVw/edit?resourcekey#gid=1625408792). I wanted to see the differences in salaries by age and race, so I created boxplots for all these different groups. The dataset is quite imbalanced because most of the respondents were white and female. However, it still gives some interesting insights into how these factors appear to influence the salary level.
+
+Check out the code [here](2021W21_Ask_a_Manager/210518_tidytuesday_ask_a_manager.Rmd).
 
 ![](2021W21_Ask_a_Manager/boxplot_salaries.png)
 
