@@ -13,6 +13,7 @@ knitr::opts_chunk$set(echo = FALSE, messages = FALSE, warnings = FALSE)
 library(tidytuesdayR)
 library(tidyverse)
 library(plotly)
+library(glue)
 ```
 
 
@@ -29,102 +30,63 @@ head(fishing)
 
 
 ```{r}
-# Getting a basic understanding of what the data looks like
-
-fishing %>%
-  filter(between(year, 1910, 2010),
-      #    species %in% c("Rainbow Smelt", "Lake Whitefish", "Walleye", "Yellow Perch"),
-         lake == "Erie"
-     
-         ) %>%
-  group_by(year, species) %>%
-  summarize(total = sum(grand_total, na.rm =TRUE)) %>%
-  ggplot(aes(x = year, y = total, color = species)) +
-  geom_bar(stat = "identity", show.legend = FALSE)
-    
-  
-```
-
-
-```{r}
-# Selecting only the rows that I want to show
-sb_fish_data <- fishing %>%
-  filter(between(year, 1990, 2010),
-         lake == "Erie"
+# Plotting function
+sunburst_plotting_function <- function(lake_name){
+  # Selecting the rows that I want
+  sb_fish_data <- fishing %>%
+  filter(between(year, 2000, 2010),
+         lake == lake_name
          ) %>%
   group_by(year, species) %>%
   summarize(total = sum(grand_total, na.rm =TRUE)) %>%
   arrange(-total)
 
-sb_fish_data
-```
+  # Wrangling the data into the lists that I need for plotly
+  fish_by_year <- sb_fish_data %>%
+    group_by(year) %>%
+    summarize(values = sum(total)) %>%
+    arrange(-year)
 
-
-
-```{r}
-# Wrangling the data into the lists that I need for plotly
-
-fish_by_year <- sb_fish_data %>%
-  group_by(year) %>%
-  summarize(values = sum(total)) %>%
-  arrange(-year)
-
-fish_by_species <- sb_fish_data %>%
-  group_by(year, species) %>%
-  summarize(values = sum(total)) %>%
-  filter(values > 0) %>%
-  arrange(-year)
-
-fish_labels = c("Lake Erie", fish_by_year$year, fish_by_species$species)
-fish_parents = c("", replicate(length(fish_by_year$year), "Lake Erie"), fish_by_species$year)
-fish_values = c(sum(fish_by_year$values), fish_by_year$values, fish_by_species$values)
-```
-
-
-```{r}
-# Checking if all the lists have the same length
-length(fish_labels) 
-length(fish_parents)
-length(fish_values)
-```
-
-```{r}
-# Sunburst plot - some of the labels are identical, so I need to add ids.
-sb_fish_plot <- plot_ly(
-  labels = fish_labels,
-  parents = fish_parents,
-  values = fish_values,
-  type = 'sunburst',
-  branchvalues = 'total',
-  sort = FALSE
-)
+  fish_by_species <- sb_fish_data %>%
+    group_by(year, species) %>%
+    summarize(values = sum(total)) %>%
+  #  filter(values > 0) %>%
+    arrange(-year) %>%
+    mutate(id = paste(year, species))
   
-sb_fish_plot  
+  fish_labels = c(glue('LAKE\n{toupper(lake_name)}'), fish_by_year$year, fish_by_species$species)
+  fish_ids = c(lake_name, fish_by_year$year, fish_by_species$id)
+  fish_parents = c("", replicate(length(fish_by_year$year), lake_name), fish_by_species$year)
+  fish_values = c(sum(fish_by_year$values), fish_by_year$values, fish_by_species$values)
+  
+  # Sunburst plot
+  sunburst_plot <- plot_ly(
+    labels = fish_labels,
+    ids = fish_ids,
+    parents = fish_parents,
+    values = fish_values,
+    type = 'sunburst',
+    branchvalues = 'total',
+    sort = FALSE
+    ) %>% 
+    layout(font = list(family = "Droid Serif",
+                       size = 16, 
+                       color = "black")
+           )
+  
+  return(sunburst_plot)}
 ```
-
-
 
 
 ```{r}
+all_plots <- lapply(unique(fishing$lake), function(x) sunburst_plotting_function(x))
+all_plots
 ```
 
-
-```{r}
-```
-
-
-```{r}
-
-```
-
-
-```{r}
-```
-
-
-```{r}
-```
-
-
+To do:
+- make sure years with 0 fish somehow show up
+- learn how to adjust colors
+- arrange plots together in a dashboard
+- don't forget the caption
 
 
