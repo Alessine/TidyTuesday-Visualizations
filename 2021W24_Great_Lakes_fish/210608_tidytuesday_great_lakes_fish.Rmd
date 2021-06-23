@@ -83,10 +83,6 @@ all_plots <- lapply(unique(fishing$lake), function(x) sunburst_plotting_function
 all_plots
 ```
 
-To do:
-- make sure years with 0 fish somehow show up
-- learn how to adjust colors
-- arrange plots together in a dashboard
-- don't forget the caption
+
 
 
