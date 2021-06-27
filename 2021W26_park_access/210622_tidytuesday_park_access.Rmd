@@ -25,17 +25,29 @@ readme(tuesdata)
 
 ```{r}
 parks <- tuesdata$parks
-head(parks)
+colnames(parks)
 ```
 
 
 ```{r}
+biggest_cities <- c("Chicago", "Los Angeles", "New York", "Phoenix", "Houston")
 
+parks_sel <- parks %>%
+  filter(city %in% biggest_cities &
+           year > 2014) %>%
+  group_by(city) %>%
+  summarize("Park Size" = mean(med_park_size_points), "City Area" = mean(park_pct_city_points), 
+            "Proximity" = mean(pct_near_park_points), "Spending" = mean(spend_per_resident_points), 
+            "Basketball Hoops" = mean(basketball_points), "Dog Parks" = mean(dogpark_points), 
+            "Playgrounds" = mean(playground_points), "Spaces for Seniors" = mean(rec_sr_points), 
+            "Amenities" = mean(amenities_points), "Total Score" = mean(total_pct, na.rm = TRUE))
+
+parks_sel
 ```
 
 
 ```{r}
-
+parks[is.na(parks$total_points), ]
 ```
 
 
