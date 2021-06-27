@@ -43,6 +43,8 @@ This week's data set contains information on CEOs in S&P 1500 firms from the 90s
 
 I created this combined plot showing different aspects in several figures. The main plot shows a regression, which was inspired by Julia Silge's TidyTuesday contribution for this week. The smaller two plots show (1) how many times each company has changed its CEO and (2) the reasons for the turnover.
 
+Check out the code [here](https://github.com/Alessine/TidyTuesday/blob/master/2021W18_CEO_Departures/210427_tidytuesday_CEO_departures.Rmd).
+
 ![](2021W18_CEO_Departures/all_plots_combined.jpg)
 
 ### Week 17 - Netflix movies and TV shows
