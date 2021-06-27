@@ -6,6 +6,11 @@ Each of the folders in this repository contains some example visualizations and 
 
 ## June 2021
 
+### Week 26 - Park Access
+This week's dataset was provided by [The Trust for Public Land](https://www.tpl.org/parks-and-an-equitable-recovery-parkscore-report). It provides ratings of public parks across the United States based on a number of criteria. I created a Lollipop Plot to show the ratings for the five biggest US cities.
+
+Check out the code [here]().
+
 ### Week 24 - Fish in the Great Lakes
 This dataset comes from the [Great Lakes Fishery Commission](http://www.glfc.org/great-lakes-databases.php). I have been looking for an opportunity to create sunburst plots and this seemed like the perfect dataset for it, with its nested structure (lakes - years - fish species). Below is the static plot for Lake Erie. If I get time, I'll see if I can arrange the plots for each lake in a dashboard to get an overview, while maintaining the interactivity that plotly offers.
 
