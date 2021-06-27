@@ -12,8 +12,7 @@ knitr::opts_chunk$set(echo = FALSE, messages = FALSE, warnings = FALSE)
 ```{r}
 library(tidytuesdayR)
 library(tidyverse)
-library(plotly)
-library(glue)
+library(ggpubr)
 ```
 
 
@@ -33,12 +32,13 @@ parks_sel <- parks %>%
   filter(city %in% biggest_cities &
            year > 2014) %>%
   group_by(city) %>%
-  summarize("Park Size" = mean(med_park_size_points), "City Area" = mean(park_pct_city_points), 
+  summarize("Park Size" = mean(med_park_size_points), "Percentage\nof City Area" = mean(park_pct_city_points), 
             "Proximity" = mean(pct_near_park_points), "Spending" = mean(spend_per_resident_points), 
-            "Basketball Hoops" = mean(basketball_points), "Dog Parks" = mean(dogpark_points), 
-            "Playgrounds" = mean(playground_points), "Spaces for Seniors" = mean(rec_sr_points), 
+            "Basketball\nHoops" = mean(basketball_points), "Dog Parks" = mean(dogpark_points), 
+            "Playgrounds" = mean(playground_points), "Spaces for\nSeniors" = mean(rec_sr_points), 
             "Amenities" = mean(amenities_points), "Total Score" = mean(total_pct, na.rm = TRUE)) %>%
   pivot_longer(!city, names_to = "Criterion", values_to = "Score") %>%
+  mutate(Criterion = fct_rev(Criterion)) %>%
   group_by(Criterion) %>%
   mutate(y = min(Score), yend = max(Score)) %>%
   ungroup()
@@ -51,11 +51,19 @@ parks_sel
 # Create the plot
 parks_lollipop <- parks_sel %>%
   ggplot(aes(x = Criterion, y = Score, color = city)) +
-  geom_point(size = 3, alpha = 0.6) +
+  geom_point(size = 3, alpha = 0.7) +
   geom_segment(aes(x = Criterion, y = y, xend = Criterion, yend = yend), color = "black", size = 0.1) +
   coord_flip() +
-  theme_light() +
-  scale_color_brewer(palette = "Dark2")
+  theme_pubclean() +
+  scale_color_brewer(palette = "Dark2") +
+  labs(title = "Scoring of Parks in Five Biggest US Cities", y = NULL, x = NULL,
+       caption = "Data: The Trust for Public Land | #TidyTuesday | @Alessine") +
+  scale_y_continuous(breaks = c(0, 40, 80), limits = c(0, 80), labels = c("low", "medium", "high")) +
+  theme(legend.position = c(0.73, 1.037), legend.direction = "horizontal", legend.title = element_blank(),
+        legend.background = element_rect("black"),
+        panel.grid.minor = element_blank(), axis.ticks = element_blank(),
+        plot.title = element_text(color = "darkgreen", size = 15, hjust = -0.2, 
+                                  face = "bold", family = "Sans"))
 
 parks_lollipop
 ```
