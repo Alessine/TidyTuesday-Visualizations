@@ -59,7 +59,7 @@ Check out the code [here](https://github.com/Alessine/TidyTuesday/blob/master/20
 ### Week 16 - US Post Offices
 I tried my hand at animated maps with the maps library and gganimate to show the establishment of post offices in the mainland USA between the years 1639 and 2000. The data was provided by [Cameron Blevins and Richard W. Helbock](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/NUKCNA).
 
-Check out the code [here](https://github.com/Alessine/TidyTuesday/blob/master/2021W17_Netflix_Shows/210420_tidytuesday_netflixshows.Rmd).
+Check out the code [here](https://github.com/Alessine/TidyTuesday/blob/master/2021W16_US_post_offices/210413_tidytuesday_uspostoffices.R).
 
 ![](2021W16_US_post_offices/US_postoffices_est.gif)
 
