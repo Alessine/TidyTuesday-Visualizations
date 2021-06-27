@@ -23,13 +23,10 @@ tuesdata <- tidytuesdayR::tt_load('2021-06-22')
 readme(tuesdata)
 ```
 
+
 ```{r}
+# Select the biggest cities, wrangle and add columns for plotting
 parks <- tuesdata$parks
-colnames(parks)
-```
-
-
-```{r}
 biggest_cities <- c("Chicago", "Los Angeles", "New York", "Phoenix", "Houston")
 
 parks_sel <- parks %>%
@@ -40,14 +37,27 @@ parks_sel <- parks %>%
             "Proximity" = mean(pct_near_park_points), "Spending" = mean(spend_per_resident_points), 
             "Basketball Hoops" = mean(basketball_points), "Dog Parks" = mean(dogpark_points), 
             "Playgrounds" = mean(playground_points), "Spaces for Seniors" = mean(rec_sr_points), 
-            "Amenities" = mean(amenities_points), "Total Score" = mean(total_pct, na.rm = TRUE))
+            "Amenities" = mean(amenities_points), "Total Score" = mean(total_pct, na.rm = TRUE)) %>%
+  pivot_longer(!city, names_to = "Criterion", values_to = "Score") %>%
+  group_by(Criterion) %>%
+  mutate(y = min(Score), yend = max(Score)) %>%
+  ungroup()
 
 parks_sel
 ```
 
 
-```{r}
-parks[is.na(parks$total_points), ]
+```{r, fig.width = 10}
+# Create the plot
+parks_lollipop <- parks_sel %>%
+  ggplot(aes(x = Criterion, y = Score, color = city)) +
+  geom_point(size = 3, alpha = 0.6) +
+  geom_segment(aes(x = Criterion, y = y, xend = Criterion, yend = yend), color = "black", size = 0.1) +
+  coord_flip() +
+  theme_light() +
+  scale_color_brewer(palette = "Dark2")
+
+parks_lollipop
 ```
 
 
