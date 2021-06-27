@@ -52,15 +52,21 @@ This week the data came from [Kaggle](https://www.kaggle.com/shivamb/netflix-sho
 
 I was interested in where the movies and TV shows on Netflix come from, so I created rain cloud plots for the five countries with the highest number of movies and shows, using the gghalves library. These plots give an idea of the absolute number of data points, while also showing their distribution. Additionally, I worked on the theme to align it with Netflix branding.
 
+Check out the code [here](https://github.com/Alessine/TidyTuesday/blob/master/2021W17_Netflix_Shows/210420_tidytuesday_netflixshows.Rmd).
+
 ![](2021W17_Netflix_Shows/raincloud_plot.png)
 
 ### Week 16 - US Post Offices
 I tried my hand at animated maps with the maps library and gganimate to show the establishment of post offices in the mainland USA between the years 1639 and 2000. The data was provided by [Cameron Blevins and Richard W. Helbock](https://dataverse.harvard.edu/dataset.xhtml?persistentId=doi:10.7910/DVN/NUKCNA).
+
+Check out the code [here](https://github.com/Alessine/TidyTuesday/blob/master/2021W17_Netflix_Shows/210420_tidytuesday_netflixshows.Rmd).
 
 ![](2021W16_US_post_offices/US_postoffices_est.gif)
 
 
 ### Week 15 - Deforestation in Brazil
 I created treemaps to show the break up of forest area loss by its different drivers in the years 2001-2013. I then used the gifski library to animate the png files and compile them into one gif. The data was provided by [Our World in Data](https://ourworldindata.org/).
+
+Check out the code [here](https://github.com/Alessine/TidyTuesday/blob/master/2021W17_Netflix_Shows/210420_tidytuesday_netflixshows.Rmd).
 
 ![](2021W15_Deforestation_in_Brazil/drivers_rainforest_loss.gif)
