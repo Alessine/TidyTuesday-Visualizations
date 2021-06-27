@@ -67,6 +67,6 @@ Check out the code [here](https://github.com/Alessine/TidyTuesday/blob/master/20
 ### Week 15 - Deforestation in Brazil
 I created treemaps to show the break up of forest area loss by its different drivers in the years 2001-2013. I then used the gifski library to animate the png files and compile them into one gif. The data was provided by [Our World in Data](https://ourworldindata.org/).
 
-Check out the code [here](https://github.com/Alessine/TidyTuesday/blob/master/2021W17_Netflix_Shows/210420_tidytuesday_netflixshows.Rmd).
+Check out the code [here](https://github.com/Alessine/TidyTuesday/blob/master/2021W15_Deforestation_in_Brazil/210406_tidytuesday_deforestation.Rmd).
 
 ![](2021W15_Deforestation_in_Brazil/drivers_rainforest_loss.gif)
