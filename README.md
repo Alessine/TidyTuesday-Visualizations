@@ -7,7 +7,7 @@ Each of the folders in this repository contains some example visualizations and 
 ## June 2021
 
 ### Week 26 - Park Access
-This week's dataset was provided by [The Trust for Public Land](https://www.tpl.org/parks-and-an-equitable-recovery-parkscore-report). It contains ratings of public parks across the United States based on a number of criteria. I created a Lollipop Plot to show the ratings for the five biggest US cities.
+This week's dataset was provided by [The Trust for Public Land](https://www.tpl.org/parks-and-an-equitable-recovery-parkscore-report). It contains ratings of public parks across the United States based on a number of criteria. I created a Lollipop Plot to show the ratings for the five biggest cities in the US.
 
 Check out the code [here](https://github.com/Alessine/TidyTuesday/blob/master/2021W26_park_access/210622_tidytuesday_park_access.Rmd).
 
