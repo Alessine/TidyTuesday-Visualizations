@@ -28,12 +28,33 @@ regions <- tuesdata$regions
 head(olympics)
 ```
 
+
+
 ```{r}
-head(regions)
+medals_by_athlete <- olympics %>%
+  filter(! is.na(medal)) %>%
+  group_by(name, medal) %>%
+  summarize(n = n(), team = team[1]) %>%
+  arrange(desc(n))
+
+medals_by_athlete
+```
+
+```{r}
+phelps <- medals_by_athlete %>%
+  filter(name == "Michael Fred Phelps, II")
+
+waffle_parts <- phelps$n
+names(waffle_parts) <- phelps$medal
+  
 ```
 
 ```{r}
 
-```
+library(waffle)
+library(extrafont)
 
+waffle(waffle_parts, rows = 3, title = phelps$name)
+
+```
 
