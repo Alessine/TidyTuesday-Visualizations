@@ -1,7 +1,7 @@
 ---
-title: "210504_tidytuesday_park_access"
+title: "210504_tidytuesday_olympics"
 author: "Angela"
-date: "23/6/2021"
+date: "28/7/2021"
 output: html_document
 ---
 
@@ -10,68 +10,30 @@ knitr::opts_chunk$set(echo = FALSE, messages = FALSE, warnings = FALSE)
 ```
 
 ```{r}
-library(tidytuesdayR)
 library(tidyverse)
-library(ggpubr)
+library(tidytuesdayR)
 ```
 
 
 ```{r}
 # Read in the data from the tidy tuesday library.
-tuesdata <- tidytuesdayR::tt_load('2021-06-22')
+tuesdata <- tidytuesdayR::tt_load('2021-07-27')
 readme(tuesdata)
-```
 
+olympics <- tuesdata$olympics
+regions <- tuesdata$regions
+```
 
 ```{r}
-# Select the biggest cities, wrangle and add columns for plotting
-parks <- tuesdata$parks
-biggest_cities <- c("Chicago", "Los Angeles", "New York", "Phoenix", "Houston")
-
-parks_sel <- parks %>%
-  filter(city %in% biggest_cities &
-           year > 2014) %>%
-  group_by(city) %>%
-  summarize("Percentage\nof City Area" = mean(park_pct_city_points), 
-            "Proximity" = mean(pct_near_park_points), "Spending" = mean(spend_per_resident_points), 
-            "Basketball\nHoops" = mean(basketball_points), "Dog Parks" = mean(dogpark_points), 
-            "Playgrounds" = mean(playground_points), "Spaces for\nSeniors" = mean(rec_sr_points), 
-            "Amenities" = mean(amenities_points), "Total Score" = mean(total_pct, na.rm = TRUE)) %>%
-  pivot_longer(!city, names_to = "Criterion", values_to = "Score") %>%
-  mutate(Criterion = fct_rev(Criterion)) %>%
-  group_by(Criterion) %>%
-  mutate(y = min(Score), yend = max(Score)) %>%
-  ungroup()
-
-parks_sel
+head(olympics)
 ```
 
-
-```{r, fig.width = 10}
-# Create the plot
-parks_lollipop <- parks_sel %>%
-  ggplot(aes(x = Criterion, y = Score, color = city)) +
-  geom_point(size = 3, alpha = 0.7) +
-  geom_segment(aes(x = Criterion, y = y, xend = Criterion, yend = yend), color = "#6f4930", size = 0.1) +
-  coord_flip() +
-  theme_pubclean() +
-  scale_color_brewer(palette = "Dark2") +
-  labs(title = "Rating of Parks in Five Biggest US Cities", y = NULL, x = NULL,
-       caption = "Data: The Trust for Public Land | #TidyTuesday | @Alessine") +
-  scale_y_continuous(breaks = c(0, 40, 80), limits = c(0, 80), labels = c("LOW", "MEDIUM", "HIGH")) +
-  theme(legend.position = c(0.73, 1.037), legend.direction = "horizontal", legend.title = element_blank(),
-        legend.key = element_blank(), legend.text = element_text(color = "#6f4930"),
-        plot.title = element_text(color = "#6f4930", size = 17, hjust = -0.24, 
-                                  face = "bold", family = "sans"),
-        axis.text.x = element_text(color = "#c56c39", size=12, vjust = 5, family = "sans"), 
-        axis.text.y = element_text(color = "#c56c39", size=12, family = "sans"), 
-        axis.ticks = element_blank(), 
-        plot.caption = element_text(color = "#6f4930", family = "sans"),)
-
-parks_lollipop
-ggsave("parks_lollipop.jpg", parks_lollipop)
+```{r}
+head(regions)
 ```
 
+```{r}
 
+```
 
 
