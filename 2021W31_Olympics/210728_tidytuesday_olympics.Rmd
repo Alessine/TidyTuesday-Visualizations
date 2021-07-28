@@ -12,6 +12,8 @@ knitr::opts_chunk$set(echo = FALSE, messages = FALSE, warnings = FALSE)
 ```{r}
 library(tidyverse)
 library(tidytuesdayR)
+library(waffle)
+library(extrafont)
 ```
 
 
@@ -50,11 +52,15 @@ names(waffle_parts) <- phelps$medal
 ```
 
 ```{r}
+w1 <- waffle(waffle_parts, rows = 3, title = phelps$name)
+w1
+```
 
-library(waffle)
-library(extrafont)
-
-waffle(waffle_parts, rows = 3, title = phelps$name)
-
+```{r}
+remotes::install_github("hrbrmstr/waffle")
+#library(hrbrthemes)
+medals_by_athlete %>%
+  ggplot(aes(fill = medal, values = n)) +
+  geom_waffle()
 ```
 
