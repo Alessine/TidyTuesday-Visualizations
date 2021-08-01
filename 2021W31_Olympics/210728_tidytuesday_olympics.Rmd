@@ -14,6 +14,7 @@ library(tidyverse)
 library(tidytuesdayR)
 library(waffle)
 library(extrafont)
+
 ```
 
 
@@ -57,10 +58,32 @@ w1
 ```
 
 ```{r}
-remotes::install_github("hrbrmstr/waffle")
-#library(hrbrthemes)
-medals_by_athlete %>%
+top_athletes <- olympics %>%
+  filter(medal == "Gold") %>%
+  group_by(name) %>%
+  summarize(n = n()) %>%
+  arrange(desc(n)) %>%
+  filter(n >= 8) %>%
+  select(-n)
+```
+
+```{r}
+olympics %>%
+  filter(name %in% top_athletes$name) %>%
+  group_by(name, medal) %>%
+  summarize(n = n()) %>%
   ggplot(aes(fill = medal, values = n)) +
-  geom_waffle()
+  geom_waffle() +
+  facet_grid(name~.)
+  
+```
+
+
+```{r}
+medals_by_athlete %>%
+  filter(n > 8) %>%
+  ggplot(aes(fill = medal, values = n)) +
+  geom_waffle() +
+  facet_grid(.~name)
 ```
 
