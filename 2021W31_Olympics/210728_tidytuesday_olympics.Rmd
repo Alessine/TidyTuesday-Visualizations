@@ -68,14 +68,21 @@ top_athletes <- olympics %>%
 ```
 
 ```{r}
-olympics %>%
+waffle_chart <- olympics %>%
   filter(name %in% top_athletes$name) %>%
   group_by(name, medal) %>%
   summarize(n = n()) %>%
+  mutate(medal = factor(medal, levels = c("Gold", "Silver", "Bronze"))) %>%
   ggplot(aes(fill = medal, values = n)) +
-  geom_waffle() +
-  facet_grid(name~.)
-  
+  geom_waffle(n_rows = 10, size = 0.33, color = "white", flip = TRUE) +
+  facet_grid(name~.) +
+  coord_equal() +
+  theme_void() +
+  theme_enhance_waffle()
+
+waffle_chart
+
+ggsave("waffle_chart.png")
 ```
 
 
