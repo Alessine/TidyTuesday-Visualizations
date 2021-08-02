@@ -68,15 +68,56 @@ waffle_chart
 
 ggsave("waffle_chart.png")
 ```
-
 ```{r}
+# Trying to install the icons - not working. Check back here: https://github.com/wch/extrafont/issues/32
+install_fa_fonts()
+extrafont::font_import()
+extrafont::loadfonts(quiet = TRUE)
+
+extrafont::fonttable() %>% 
+  as_tibble() #%>% 
+  filter(grepl("Awesom", FamilyName)) %>% 
+  select(afmfile, FullName, FamilyName, FontName)
+```
+
+```{r, fig.width = 10}
 # Pictogram
 
+pictogram <- olympics %>%
+  filter(name %in% top_athletes$name) %>%
+  group_by(name, medal) %>%
+  summarize(n = n()) %>%
+  mutate(medal = factor(medal, levels = c("Gold", "Silver", "Bronze"))) %>%  
+  arrange(medal) %>%
+  ggplot(aes(label = medal, values = n, color = medal)) +
+  geom_pictogram(n_rows = 10, color = "black", flip = TRUE) +
+  facet_wrap(name~., ncol = 3, strip.position = "bottom") +
+  coord_equal() +
+  scale_color_manual(name = NULL,
+                     values = c(
+                       Gold = "#FFD700",
+                       Silver = "#C0C0C0",
+                       Bronze = "#CD7F32"
+                     )) +
+  scale_label_pictogram(name = NULL,
+                        values = c(
+                          Gold = "medal",
+                          Silver = "medal",
+                          Bronze = "medal"
+                        )) +
+  labs(title = "OLYMPIC MEDALS", subtitle = "How many can one person win?", 
+      caption = "Data: Kaggle | #TidyTuesday | @Alessine") +
+  theme_void() +
+  theme(panel.background = element_rect(fill = "white", color = "white"),
+        plot.background = element_rect(fill = "white", color = "white"),
+        plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(face = "bold", hjust = 0.5),
+        plot.caption = element_text(hjust = 0.5, vjust = -10))
+
+pictogram
+
+ggsave("pictogram.png")
 ```
 
 
-
-```{r}
-fa_list()
-```
 
