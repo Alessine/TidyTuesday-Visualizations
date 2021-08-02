@@ -51,7 +51,7 @@ waffle_chart <- olympics %>%
   arrange(medal) %>%
   ggplot(aes(fill = medal, values = n)) +
   geom_waffle(n_rows = 10, color = "white", size = 0.5, flip = TRUE) +
-  facet_wrap(name~., ncol = 3, strip.position = "bottom") +
+  facet_wrap(name~., ncol = 3, strip.position = "bottom", labeller = labeller(name = label_wrap_gen(width = 40))) +
   coord_equal() +
   scale_fill_manual(name = NULL,
                     values = c("#FFD700", "#C0C0C0", "#CD7F32"),
