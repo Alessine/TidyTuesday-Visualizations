@@ -6,17 +6,11 @@ output: html_document
 ---
 
 ```{r}
-knitr::opts_chunk$set(echo = FALSE, messages = FALSE, warnings = FALSE)
-```
-
-```{r}
 library(tidyverse)
 library(tidytuesdayR)
 library(waffle)
 library(extrafont)
 library(devtools)
-#devtools::install_github('hrbrmstr/hrbrthemes')
-#library(hrbrthemes)
 ```
 
 
@@ -34,31 +28,6 @@ head(olympics)
 ```
 
 
-
-```{r}
-medals_by_athlete <- olympics %>%
-  filter(! is.na(medal)) %>%
-  group_by(name, medal) %>%
-  summarize(n = n(), team = team[1]) %>%
-  arrange(desc(n))
-
-medals_by_athlete
-```
-
-```{r}
-phelps <- medals_by_athlete %>%
-  filter(name == "Michael Fred Phelps, II")
-
-waffle_parts <- phelps$n
-names(waffle_parts) <- phelps$medal
-  
-```
-
-```{r}
-w1 <- waffle(waffle_parts, rows = 3, title = phelps$name)
-w1
-```
-
 ```{r}
 top_athletes <- olympics %>%
   filter(medal == "Gold") %>%
@@ -69,32 +38,39 @@ top_athletes <- olympics %>%
   select(-n)
 ```
 
+
 ```{r, fig.width = 10}
+# Waffle Chart
+
 waffle_chart <- olympics %>%
   filter(name %in% top_athletes$name) %>%
   group_by(name, medal) %>%
   summarize(n = n()) %>%
-  mutate(medal = fct_relevel(medal, "Gold", "Silver", "Bronze")) %>%
+  mutate(medal = factor(medal, levels = c("Gold", "Silver", "Bronze"))) %>%  
+  arrange(medal) %>%
   ggplot(aes(fill = medal, values = n)) +
-  geom_waffle(n_rows = 10, color = "white", flip = TRUE) +
+  geom_waffle(n_rows = 10, color = "white", size = 0.5, flip = TRUE) +
   facet_wrap(name~., ncol = 3, strip.position = "bottom") +
   coord_equal() +
   scale_fill_manual(name = NULL,
                     values = c("#FFD700", "#C0C0C0", "#CD7F32"),
                     labels = c("Gold", "Silver", "Bronze")) +
+  labs(title = "OLYMPIC MEDALS", subtitle = "How many can one person win?", 
+      caption = "Data: Kaggle | #TidyTuesday | @Alessine") +
   theme_void() +
   theme(panel.background = element_rect(fill = "white", color = "white"),
-        plot.background = element_rect(fill = "white", color = "white"))
-#  theme_ipsum_rc() +
-#  theme_enhance_waffle()
-        
+        plot.background = element_rect(fill = "white", color = "white"),
+        plot.title = element_text(face = "bold", hjust = 0.5),
+        plot.subtitle = element_text(face = "bold", hjust = 0.5),
+        plot.caption = element_text(hjust = 0.5, vjust = -10))
+
 waffle_chart
 
 ggsave("waffle_chart.png")
 ```
 
 ```{r}
-?facet_wrap()
+# Pictogram
 
 ```
 
