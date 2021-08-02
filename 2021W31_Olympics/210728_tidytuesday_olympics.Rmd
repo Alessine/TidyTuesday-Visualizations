@@ -14,7 +14,9 @@ library(tidyverse)
 library(tidytuesdayR)
 library(waffle)
 library(extrafont)
-
+library(devtools)
+#devtools::install_github('hrbrmstr/hrbrthemes')
+#library(hrbrthemes)
 ```
 
 
@@ -67,25 +69,35 @@ top_athletes <- olympics %>%
   select(-n)
 ```
 
-```{r}
+```{r, fig.width = 10}
 waffle_chart <- olympics %>%
   filter(name %in% top_athletes$name) %>%
   group_by(name, medal) %>%
   summarize(n = n()) %>%
-  mutate(medal = factor(medal, levels = c("Gold", "Silver", "Bronze"))) %>%
+  mutate(medal = fct_relevel(medal, "Gold", "Silver", "Bronze")) %>%
   ggplot(aes(fill = medal, values = n)) +
-  geom_waffle(n_rows = 10, size = 0.2, color = "white", flip = TRUE,) +
-  facet_grid(name~.) +
+  geom_waffle(n_rows = 10, color = "white", flip = TRUE) +
+  facet_wrap(name~., ncol = 3, strip.position = "bottom") +
   coord_equal() +
   scale_fill_manual(name = NULL,
                     values = c("#FFD700", "#C0C0C0", "#CD7F32"),
                     labels = c("Gold", "Silver", "Bronze")) +
-  theme_void()
+  theme_void() +
+  theme(panel.background = element_rect(fill = "white", color = "white"),
+        plot.background = element_rect(fill = "white", color = "white"))
+#  theme_ipsum_rc() +
+#  theme_enhance_waffle()
         
 waffle_chart
 
 ggsave("waffle_chart.png")
 ```
+
+```{r}
+?facet_wrap()
+
+```
+
 
 
 ```{r}
