@@ -4,6 +4,10 @@ This is the repository for all of my contributions to #TidyTuesday, an initiativ
 
 Each of the folders in this repository contains some example visualizations and the code I wrote to create them. So far, I have worked on the following data sets:
 
+## July 2021
+
+### Week 31 - Olympics
+
 ## June 2021
 
 ### Week 26 - Park Access
