@@ -39,6 +39,7 @@ top_athletes <- olympics %>%
 ```
 
 
+
 ```{r, fig.width = 10}
 # Waffle Chart
 
@@ -60,9 +61,11 @@ waffle_chart <- olympics %>%
   theme_void() +
   theme(panel.background = element_rect(fill = "white", color = "white"),
         plot.background = element_rect(fill = "white", color = "white"),
-        plot.title = element_text(face = "bold", hjust = 0.5),
-        plot.subtitle = element_text(face = "bold", hjust = 0.5),
-        plot.caption = element_text(hjust = 0.5, vjust = -10))
+        plot.title = element_text(face = "bold", hjust = 0.5, family = "mono", size = 26),
+        plot.subtitle = element_text(face = "bold", hjust = 0.5, family = "mono", size = 20),
+        plot.caption = element_text(hjust = 0.5, vjust = -10, family = "mono"),
+        strip.text = element_text(family = "sans", size = 10),
+        legend.position = "none")
 
 waffle_chart
 
