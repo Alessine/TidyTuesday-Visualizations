@@ -22,7 +22,8 @@ Check out the code [here](https://github.com/Alessine/TidyTuesday/blob/master/20
 
 ### Week 24 - Fish in the Great Lakes
 This dataset comes from the [Great Lakes Fishery Commission](http://www.glfc.org/great-lakes-databases.php). I have been looking for an opportunity to create sunburst plots and this seemed like the perfect dataset for it, with its nested structure (lakes - years - fish species). Below is the static plot for Lake Erie.
-Since the dataset includes figures for all five great lakes, I wrote the plotting code into a function, which can be used to make this kind of plot for each of them, just by specifying the name of the lake.
+
+Since the dataset includes figures for all five great lakes, I wrote the plotting code into a function, which can be used to make this kind of plot for each of them by just specifying the name of the lake.
 
 Check out the code [here](2021W24_Great_Lakes_fish/210608_tidytuesday_great_lakes_fish.Rmd).
 
