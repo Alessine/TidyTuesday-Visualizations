@@ -9,6 +9,8 @@ Each of the folders in this repository contains some example visualizations and 
 ### Week 31 - Olympics
 The data this week comes from [Kaggle](https://www.kaggle.com/heesoo37/120-years-of-olympic-history-athletes-and-results?select=noc_regions.csv). It contains data on all the contenders in the Olympics from Athens 1896 to Rio 2016, including of course the great Champions who won gold, silver and bronze medals time and again. My unit chart below shows the 12 athletes who have won the highest number of gold medals over these 120 years. Each square represents one medal.
 
+Check out the code [here](https://github.com/Alessine/TidyTuesday/blob/master/2021W31_Olympics/210728_tidytuesday_olympics.Rmd).
+
 ![](2021W31_Olympics/waffle_chart.png)
 
 ## June 2021
